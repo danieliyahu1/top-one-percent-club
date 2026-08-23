@@ -9,21 +9,25 @@ interface AnswerAreaProps {
 }
 
 export default function AnswerArea({ question, answered, onSubmit }: AnswerAreaProps) {
+  const [pickedId, setPickedId] = useState<string | null>(null);
+
   if (question.answerMode === "choice") {
     return (
       <div className="answers">
         {(question.answers ?? []).map((answer) => {
           let className = "answer";
-          if (answered) {
-            if (answer.id === question.correctAnswerId) className += " correct";
-            else className += " dim";
-          }
+          if (answer.id === question.correctAnswerId) className += " correct";
+          else if (answered && pickedId === answer.id) className += " wrong";
+          else if (answered) className += " dim";
           return (
             <button
               key={answer.id}
               className={className}
               disabled={answered}
-              onClick={() => onSubmit(answer.id === question.correctAnswerId)}
+              onClick={() => {
+                setPickedId(answer.id);
+                onSubmit(answer.id === question.correctAnswerId);
+              }}
             >
               {answer.type === "image" ? (
                 <img className="answer-image" src={answer.src} alt="תשובה" />

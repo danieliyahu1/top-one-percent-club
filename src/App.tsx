@@ -21,7 +21,7 @@ export default function App() {
   }
 
   if (!started) {
-    return <Landing count={QUESTIONS.length} onStart={() => setStarted(true)} />;
+    return <Landing onStart={() => setStarted(true)} />;
   }
 
   if (quiz.finished) {
