@@ -34,13 +34,13 @@ function resolveImage(folder: string, filename: string | undefined): string | un
   return url ?? undefined;
 }
 
-function normalizeAnswers(answers: RawQuestion["answers"]): Answer[] {
+function normalizeAnswers(answers: RawQuestion["answers"], folder: string): Answer[] {
   if (!answers) return [];
   return answers
     .filter((a) => a && a.type)
     .map((a) => {
       if (a.type === "image") {
-        return { id: a.id ?? "", type: "image", src: a.src ?? "" } satisfies Answer;
+        return { id: a.id ?? "", type: "image", src: resolveImage(folder, a.src) ?? "" } satisfies Answer;
       }
       return { id: a.id ?? "", type: "text", text: a.text ?? "" } satisfies Answer;
     });
@@ -53,7 +53,7 @@ function coerceQuestion(raw: RawQuestion, folder: string): Question {
     questionText: raw.questionText ?? "",
     questionImage: resolveImage(folder, raw.questionImage),
     answerMode: raw.answerMode === "typed" ? "typed" : "choice",
-    answers: raw.answerMode === "typed" ? undefined : normalizeAnswers(raw.answers),
+    answers: raw.answerMode === "typed" ? undefined : normalizeAnswers(raw.answers, folder),
     correctAnswerId: raw.correctAnswerId ?? undefined,
     acceptedAnswers:
       raw.answerMode === "typed"
