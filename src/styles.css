@@ -279,6 +279,33 @@ body {
   color: var(--wrong);
 }
 
+.timer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.timer-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timer-fill {
+  height: 100%;
+  background: var(--accent-2);
+  border-radius: 4px;
+  transition: width 1s linear;
+}
+
+.timer-text {
+  font-size: 14px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
 @media (max-width: 600px) {
   .answers {
     grid-template-columns: 1fr;
