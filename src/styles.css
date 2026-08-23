@@ -181,6 +181,7 @@ body {
 
 .answer {
   background: var(--bg-card);
+  color: var(--text);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
   padding: 20px;
