@@ -1,0 +1,29 @@
+{
+  "id": "q-letters-1",
+  "percentage": -1,
+  "questionText": "איזו אות נמצאת במקום הלא נכון?\nאבגדהוזחטיכרלמסנסעפףצץקרשת",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "a1",
+      "type": "text",
+      "text": "ע"
+    },
+    {
+      "id": "a2",
+      "type": "text",
+      "text": "ל"
+    },
+    {
+      "id": "a3",
+      "type": "text",
+      "text": "פ"
+    },
+    {
+      "id": "a4",
+      "type": "text",
+      "text": "צ"
+    }
+  ],
+  "correctAnswerId": "a4"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "q-beaver-1",
+  "percentage": 5,
+  "questionText": "על איזה מונח רמזת התמונה?",
+  "questionImage": "20.jpg",
+  "answerMode": "typed",
+  "acceptedAnswers": [
+    "בונה חופשי"
+  ]
+}

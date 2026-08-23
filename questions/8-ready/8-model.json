@@ -1,0 +1,34 @@
+{
+  "id": "q35-1",
+  "percentage": 35,
+  "questionText": "איזה משפט יוצא דופן?",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "a1",
+      "type": "text",
+      "text": "מי לימד מילים"
+    },
+    {
+      "id": "a2",
+      "type": "text",
+      "text": "מגילה לי גם"
+    },
+    {
+      "id": "a3",
+      "type": "text",
+      "text": "ארון קיר היה ריק נורא"
+    },
+    {
+      "id": "a4",
+      "type": "text",
+      "text": "לכריש שיר כל"
+    },
+    {
+      "id": "a5",
+      "type": "text",
+      "text": "מי ניצח במשחקים"
+    }
+  ],
+  "correctAnswerId": "a5"
+}

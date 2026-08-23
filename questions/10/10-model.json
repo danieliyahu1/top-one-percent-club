@@ -1,0 +1,10 @@
+{
+  "id": "q30-1",
+  "percentage": 30,
+  "questionText": "מה היא תשתה אחרי האימון?",
+  "questionImage": "10.1.jpg",
+  "answerMode": "typed",
+  "acceptedAnswers": [
+    "שמפניה"
+  ]
+}

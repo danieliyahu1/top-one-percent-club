@@ -1,0 +1,11 @@
+{
+  "id": "q-family-1",
+  "percentage": -1,
+  "questionText": "אם האחות של האח של הדוד שלך היא לא הדודה שלך, אז מה היא שלך?",
+  "answerMode": "typed",
+  "acceptedAnswers": [
+    "אמא",
+    "אמא שלך",
+    "אמא שלי"
+  ]
+}

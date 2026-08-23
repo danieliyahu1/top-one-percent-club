@@ -1,0 +1,24 @@
+{
+  "id": "q_90-1",
+  "percentage": -1,
+  "questionText": "איזו תמונה לא הגיונית?",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "4.1",
+      "type": "image",
+      "src": "4.1.jpeg"
+    },
+    {
+      "id": "4.2",
+      "type": "image",
+      "src": "4.2.jpeg"
+    },
+    {
+      "id": "4.3",
+      "type": "image",
+      "src": "4.3.jpeg"
+    }
+  ],
+  "correctAnswerId": "4.3"
+}

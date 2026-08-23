@@ -1,0 +1,12 @@
+{
+  "id": "q-tictactoe-1",
+  "percentage": -1,
+  "questionText": "שלא במהלך משחק, מהו מספר האיקסים הגדול ביותר שאפשר להציב בלוח איקס-מיקס-דריקס בלי לסגור שורה, טור או אלכסון?",
+  "questionImage": "14.jpg",
+  "answerMode": "typed",
+  "acceptedAnswers": [
+    "6",
+    "שש",
+    "שישה"
+  ]
+}
