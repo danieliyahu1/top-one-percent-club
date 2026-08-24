@@ -4,7 +4,7 @@ import { isAccepted } from "./validate.js";
 
 export const QUIZ_SIZE = 10;
 export const QUESTION_SECONDS = 60;
-export const REVEAL_SECONDS = 8;
+export const REVEAL_SECONDS = 10;
 
 export interface Player {
   id: string;
@@ -63,6 +63,7 @@ function publicQuestion(room: Room): Question | undefined {
 export class RoomManager {
   private rooms = new Map<string, Room>();
   private allQuestions: Question[];
+  onChange: ((code: string) => void) | null = null;
 
   constructor() {
     this.allQuestions = loadQuestions();
@@ -150,7 +151,10 @@ export class RoomManager {
   private scheduleQuestionEnd(room: Room): void {
     if (room.timer) clearTimeout(room.timer);
     const remaining = room.deadline - Date.now();
-    room.timer = setTimeout(() => this.endQuestion(room), Math.max(0, remaining));
+    room.timer = setTimeout(() => {
+      this.endQuestion(room);
+      this.onChange?.(room.code);
+    }, Math.max(0, remaining));
   }
 
   submitAnswer(
@@ -184,7 +188,10 @@ export class RoomManager {
     if (room.timer) clearTimeout(room.timer);
     room.phase = "reveal";
     room.revealDeadline = Date.now() + REVEAL_SECONDS * 1000;
-    room.timer = setTimeout(() => this.advance(room), REVEAL_SECONDS * 1000);
+    room.timer = setTimeout(() => {
+      this.advance(room);
+      this.onChange?.(room.code);
+    }, REVEAL_SECONDS * 1000);
   }
 
   advance(room: Room): void {

@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import type { Question } from "../types";
 import type { RoomPhase, RoomSnapshot } from "../game/multiplayer";
+import { isAccepted } from "../game/validate";
 
 interface AnswerAreaProps {
   question: Question;
@@ -12,6 +13,7 @@ interface AnswerAreaProps {
 export default function AnswerArea({ question, phase, reveal, onSubmit }: AnswerAreaProps) {
   const [pickedId, setPickedId] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [submittedText, setSubmittedText] = useState("");
 
   const isReveal = phase === "reveal";
 
@@ -28,7 +30,7 @@ export default function AnswerArea({ question, phase, reveal, onSubmit }: Answer
         {(question.answers ?? []).map((answer) => {
           let className = "answer";
           if (isReveal) {
-            if (answer.id === reveal?.correctAnswerId) className += " correct";
+            if (answer.id === reveal?.correctAnswerId) className += " correct reveal-correct";
             else if (pickedId === answer.id) className += " wrong";
             else className += " dim";
           } else if (submitted && pickedId === answer.id) {
@@ -58,7 +60,11 @@ export default function AnswerArea({ question, phase, reveal, onSubmit }: Answer
   return (
     <TypedAnswer
       submitted={submitted}
+      isReveal={isReveal}
+      accepted={reveal?.acceptedAnswers}
+      value={submittedText}
       onSubmit={(text) => {
+        setSubmittedText(text);
         setSubmitted(true);
         onSubmit(null, text);
       }}
@@ -68,17 +74,38 @@ export default function AnswerArea({ question, phase, reveal, onSubmit }: Answer
 
 function TypedAnswer({
   submitted,
+  isReveal,
+  accepted,
+  value,
   onSubmit,
 }: {
   submitted: boolean;
+  isReveal: boolean;
+  accepted: string[] | undefined;
+  value: string;
   onSubmit: (text: string) => void;
 }) {
-  const [value, setValue] = useState("");
+  const [localValue, setLocalValue] = useState("");
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (submitted || value.trim() === "") return;
-    onSubmit(value.trim());
+    const text = (value || localValue).trim();
+    if (submitted || text === "") return;
+    onSubmit(text);
+  }
+
+  if (isReveal) {
+    const correct = value !== "" && isAccepted(value, accepted);
+    return (
+      <div className="typed-reveal">
+        <div className={`typed-answer-result ${correct ? "correct" : "wrong"}`}>
+          <span className="typed-result-text">{value || "לא ענית"}</span>
+        </div>
+        <div className="typed-answer-result correct">
+          <span className="typed-result-text">{accepted?.join(" / ") ?? ""}</span>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -86,13 +113,13 @@ function TypedAnswer({
       <input
         className="typed-input"
         type="text"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={localValue}
+        onChange={(e) => setLocalValue(e.target.value)}
         placeholder="הקלד את תשובתך..."
         disabled={submitted}
         autoFocus
       />
-      <button className="btn-primary" type="submit" disabled={submitted || value.trim() === ""}>
+      <button className="btn-primary" type="submit" disabled={submitted || localValue.trim() === ""}>
         שלח
       </button>
     </form>

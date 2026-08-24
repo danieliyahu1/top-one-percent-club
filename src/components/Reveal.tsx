@@ -10,6 +10,8 @@ interface RevealProps {
   onNext: () => void;
 }
 
+const REVEAL_MS = 10000;
+
 export default function Reveal({ room, myId, isHost, onNext }: RevealProps) {
   const question = room.question!;
   const reveal = room.reveal!;
@@ -20,10 +22,12 @@ export default function Reveal({ room, myId, isHost, onNext }: RevealProps) {
     return () => clearInterval(id);
   }, []);
 
-  const remaining = Math.ceil(Math.max(0, room.revealDeadline - now) / 1000);
+  const totalMs = Math.max(0, room.revealDeadline - now);
+  const remaining = Math.ceil(totalMs / 1000);
   const me = room.players.find((p) => p.id === myId);
   const myCorrect = me?.answered && me?.correct;
   const nonVoters = room.players.filter((p) => !p.answered);
+  const isLast = room.index + 1 >= room.total;
 
   return (
     <div className="app reveal">
@@ -33,8 +37,8 @@ export default function Reveal({ room, myId, isHost, onNext }: RevealProps) {
         </span>
       </div>
 
-      <div className={`reveal-title ${myCorrect ? "correct" : "wrong"}`}>
-        {myCorrect ? "נכון!" : "טעות!"}
+      <div className={`reveal-icon ${myCorrect ? "correct" : "wrong"}`}>
+        {myCorrect ? "✓" : "✗"}
       </div>
 
       <QuestionCard question={question} />
@@ -48,17 +52,25 @@ export default function Reveal({ room, myId, isHost, onNext }: RevealProps) {
       />
 
       {nonVoters.length > 0 && (
-        <p className="non-voters">
-          לא ענו: {nonVoters.map((p) => p.name).join(", ")}
-        </p>
+        <p className="non-voters">לא ענו: {nonVoters.map((p) => p.name).join(", ")}</p>
       )}
 
-      {isHost ? (
+      <div className="reveal-timer">
+        <div className="timer-bar">
+          <div
+            className="timer-fill"
+            style={{ width: `${(totalMs / REVEAL_MS) * 100}%` }}
+          />
+        </div>
+        <span className="timer-text">
+          {isLast ? "לתוצאות בעוד" : "השאלה הבאה בעוד"} {remaining}
+        </span>
+      </div>
+
+      {isHost && (
         <button className="btn-primary" onClick={onNext}>
-          {room.index + 1 >= room.total ? "לתוצאות" : "השאלה הבאה"}
+          {isLast ? "לתוצאות" : "השאלה הבאה"}
         </button>
-      ) : (
-        <p className="share-hint">ממתין למנחה... ({remaining})</p>
       )}
     </div>
   );

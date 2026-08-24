@@ -34,6 +34,8 @@ function emitRoom(code: string) {
   io.to(code).emit("state", rooms.snapshot(room));
 }
 
+rooms.onChange = (code) => emitRoom(code);
+
 function leaveRoom(socket: Socket) {
   const code = socket.data.room as string | undefined;
   if (!code) return;
