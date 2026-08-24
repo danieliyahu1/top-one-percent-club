@@ -22,7 +22,9 @@ export type IconName =
   | "results"
   | "warning"
   | "person"
-  | "code";
+  | "code"
+  | "up"
+  | "down";
 
 const PATHS: Record<IconName, JSX.Element> = {
   gamepad: (
@@ -148,6 +150,18 @@ const PATHS: Record<IconName, JSX.Element> = {
       <circle cx="8" cy="15" r="4" />
       <path d="M11 12l8-8" />
       <line x1="16" y1="7" x2="19" y2="10" />
+    </>
+  ),
+  up: (
+    <>
+      <line x1="12" y1="19" x2="12" y2="5" />
+      <polyline points="5 12 12 5 19 12" />
+    </>
+  ),
+  down: (
+    <>
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <polyline points="19 12 12 19 5 12" />
     </>
   ),
 };

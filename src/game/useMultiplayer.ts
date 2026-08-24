@@ -1,6 +1,23 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { socket } from "./socket";
 import type { RoomSnapshot } from "./multiplayer";
+
+function rankPlayers(players: RoomSnapshot["players"]): Record<string, number> {
+  const ranked = [...players].sort((a, b) => b.score - a.score);
+  const ranks: Record<string, number> = {};
+  ranked.forEach((p, i) => {
+    ranks[p.id] = i + 1;
+  });
+  return ranks;
+}
+
+function scoresOf(players: RoomSnapshot["players"]): Record<string, number> {
+  const scores: Record<string, number> = {};
+  players.forEach((p) => {
+    scores[p.id] = p.score;
+  });
+  return scores;
+}
 
 interface JoinResult {
   ok: boolean;
@@ -15,6 +32,9 @@ export function useMultiplayer() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [clockOffset, setClockOffset] = useState(0);
+  const capturedIndexRef = useRef<number | null>(null);
+  const [prevRanks, setPrevRanks] = useState<Record<string, number>>({});
+  const [prevScores, setPrevScores] = useState<Record<string, number>>({});
 
   useEffect(() => {
     const refreshId = () => setMyId(socket.id ?? "");
@@ -23,6 +43,20 @@ export function useMultiplayer() {
       refreshId();
       setRoom(snapshot);
       setClockOffset(snapshot.serverNow - Date.now());
+      if (snapshot.phase === "lobby") {
+        capturedIndexRef.current = null;
+        setPrevRanks({});
+        setPrevScores({});
+        return;
+      }
+      if (
+        snapshot.phase === "question" &&
+        capturedIndexRef.current !== snapshot.index
+      ) {
+        capturedIndexRef.current = snapshot.index;
+        setPrevRanks(rankPlayers(snapshot.players));
+        setPrevScores(scoresOf(snapshot.players));
+      }
     });
     socket.on("room:closed", () => {
       setRoom(null);
@@ -122,6 +156,8 @@ export function useMultiplayer() {
     busy,
     clockOffset,
     isHost,
+    prevRanks,
+    prevScores,
     createRoom,
     joinRoom,
     start,

@@ -4,7 +4,6 @@ import { isAccepted } from "./validate.js";
 
 export const QUIZ_SIZE = 10;
 export const QUESTION_SECONDS = 60;
-export const REVEAL_SECONDS = 10;
 
 export interface Player {
   id: string;
@@ -25,7 +24,6 @@ export interface Room {
   index: number;
   phase: Phase;
   deadline: number;
-  revealDeadline: number;
   timer: NodeJS.Timeout | null;
 }
 
@@ -93,7 +91,6 @@ export class RoomManager {
       index: 0,
       phase: "lobby",
       deadline: 0,
-      revealDeadline: 0,
       timer: null,
     };
     this.rooms.set(code, room);
@@ -185,13 +182,11 @@ export class RoomManager {
   }
 
   private endQuestion(room: Room): void {
-    if (room.timer) clearTimeout(room.timer);
+    if (room.timer) {
+      clearTimeout(room.timer);
+      room.timer = null;
+    }
     room.phase = "reveal";
-    room.revealDeadline = Date.now() + REVEAL_SECONDS * 1000;
-    room.timer = setTimeout(() => {
-      this.advance(room);
-      this.onChange?.(room.code);
-    }, REVEAL_SECONDS * 1000);
   }
 
   advance(room: Room): void {
@@ -200,7 +195,6 @@ export class RoomManager {
     if (last) {
       room.phase = "results";
       room.deadline = 0;
-      room.revealDeadline = 0;
       return;
     }
     room.index += 1;
@@ -261,7 +255,6 @@ export class RoomManager {
       total: room.questions.length,
       phase: room.phase,
       deadline: room.deadline,
-      revealDeadline: room.revealDeadline,
       serverNow: Date.now(),
       question: publicQuestion(room),
       reveal,

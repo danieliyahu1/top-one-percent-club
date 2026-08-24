@@ -7,7 +7,6 @@ import QuizScreen from "./components/QuizScreen";
 import Results from "./components/Results";
 import Lobby from "./components/Lobby";
 import MultiQuizScreen from "./components/MultiQuizScreen";
-import Reveal from "./components/Reveal";
 import Leaderboard from "./components/Leaderboard";
 
 const QUESTIONS = loadQuestions();
@@ -69,31 +68,21 @@ export default function App() {
 
   if (room) {
     const myId = mp.myId;
-    const myPlayer = room.players.find((p) => p.id === myId);
-    const myAnswered = !!myPlayer?.answered;
 
     if (room.phase === "lobby") {
       return <Lobby room={room} isHost={mp.isHost} onStart={mp.start} onLeave={handleLeave} />;
     }
 
-    if (room.phase === "question") {
+    if (room.phase === "question" || room.phase === "reveal") {
       return (
         <MultiQuizScreen
-          room={room}
-          myAnswered={myAnswered}
-          clockOffset={mp.clockOffset}
-          onSubmit={handleAnswer}
-        />
-      );
-    }
-
-    if (room.phase === "reveal") {
-      return (
-        <Reveal
           room={room}
           myId={myId}
           isHost={mp.isHost}
           clockOffset={mp.clockOffset}
+          prevRanks={mp.prevRanks}
+          prevScores={mp.prevScores}
+          onSubmit={handleAnswer}
           onNext={mp.next}
         />
       );
