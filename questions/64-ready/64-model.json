@@ -1,0 +1,34 @@
+﻿{
+  "id": "q-64-1",
+  "percentage": 35,
+  "questionText": "איזה מהמשפטים הבאים הוא היחיד שנכון?",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "ans-aleph",
+      "type": "text",
+      "text": "יש פה בדיוק משפט אחד שקרי"
+    },
+    {
+      "id": "ans-bet",
+      "type": "text",
+      "text": "יש פה בדיוק שני משפטים שקריים"
+    },
+    {
+      "id": "ans-gimel",
+      "type": "text",
+      "text": "יש פה בדיוק שלושה משפטים שקריים"
+    },
+    {
+      "id": "ans-dalet",
+      "type": "text",
+      "text": "יש פה בדיוק ארבעה משפטים שקריים"
+    },
+    {
+      "id": "ans-he",
+      "type": "text",
+      "text": "יש פה בדיוק חמישה משפטים שקריים"
+    }
+  ],
+  "correctAnswerId": "ans-dalet"
+}

@@ -1,0 +1,11 @@
+﻿{
+  "id": "q-66-1",
+  "percentage": 30,
+  "questionText": "על איזה ביטוי סלנג מרמזת התמונה?",
+  "questionImage": "66.1.jpeg",
+  "answerMode": "typed",
+  "acceptedAnswers": [
+    "אחלה בחלה",
+    "אחלה-בחלה"
+  ]
+}

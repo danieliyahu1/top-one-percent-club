@@ -1,0 +1,25 @@
+﻿{
+  "id": "q-57-1",
+  "percentage": 60,
+  "questionText": "מכמה כדורים בנויה הפירמידה שבתמונה?",
+  "questionImage": "57.1.jpeg",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "ans-aleph",
+      "type": "text",
+      "text": "25"
+    },
+    {
+      "id": "ans-bet",
+      "type": "text",
+      "text": "30"
+    },
+    {
+      "id": "ans-gimel",
+      "type": "text",
+      "text": "36"
+    }
+  ],
+  "correctAnswerId": "ans-bet"
+}
