@@ -14,7 +14,6 @@ interface AnswerAreaProps {
 export default function AnswerArea({ question, phase, reveal, myCorrect, onSubmit }: AnswerAreaProps) {
   const [pickedId, setPickedId] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
-  const [submittedText, setSubmittedText] = useState("");
 
   const isReveal = phase === "reveal";
 
@@ -69,10 +68,7 @@ export default function AnswerArea({ question, phase, reveal, myCorrect, onSubmi
       submitted={submitted}
       isReveal={isReveal}
       myCorrect={myCorrect}
-      accepted={reveal?.acceptedAnswers}
-      value={submittedText}
       onSubmit={(text) => {
-        setSubmittedText(text);
         setSubmitted(true);
         onSubmit(null, text);
       }}
@@ -84,59 +80,39 @@ function TypedAnswer({
   submitted,
   isReveal,
   myCorrect,
-  accepted,
-  value,
   onSubmit,
 }: {
   submitted: boolean;
   isReveal: boolean;
   myCorrect: boolean;
-  accepted: string[] | undefined;
-  value: string;
   onSubmit: (text: string) => void;
 }) {
   const [localValue, setLocalValue] = useState("");
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const text = (value || localValue).trim();
+    const text = localValue.trim();
     if (submitted || text === "") return;
     onSubmit(text);
   }
 
-  if (isReveal) {
-    const correct = myCorrect;
-    return (
-      <div className="typed-reveal">
-        <div className={`typed-answer-result ${correct ? "correct" : "wrong"}`}>
-          <span className="typed-result-text" role="img" aria-label="התשובה שלך">
-            {value || <Icon name="wait" label="לא ענית" />}
-          </span>
-        </div>
-        {correct && (
-          <div className="typed-answer-result correct">
-            <span className="typed-result-text">{accepted?.join(" / ") ?? ""}</span>
-          </div>
-        )}
-      </div>
-    );
-  }
+  const verdictClass = !isReveal ? "" : myCorrect ? " correct" : " wrong";
 
   return (
     <form className="typed-answer" onSubmit={handleSubmit}>
       <input
-        className="typed-input"
+        className={`typed-input${verdictClass}`}
         type="text"
         value={localValue}
         onChange={(e) => setLocalValue(e.target.value)}
         placeholder="הקלד את תשובתך..."
-        disabled={submitted}
-        autoFocus
+        disabled={submitted || isReveal}
+        autoFocus={!isReveal}
       />
       <button
         className="btn-primary"
         type="submit"
-        disabled={submitted || localValue.trim() === ""}
+        disabled={submitted || isReveal || localValue.trim() === ""}
         aria-label="שלח"
       >
         <Icon name="submit" label="שלח" />
