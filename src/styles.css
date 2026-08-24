@@ -630,10 +630,9 @@ body {
   gap: 10px;
 }
 
-.standings-title {
-  font-size: 28px;
-  font-weight: 800;
+.standings-header .icon {
   color: var(--accent);
+  font-size: 28px;
 }
 
 .standings-hint {

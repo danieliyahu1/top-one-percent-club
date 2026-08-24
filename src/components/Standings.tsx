@@ -47,7 +47,7 @@ export default function Standings({
   return (
     <div className="standings">
       <div className="standings-header">
-        <span className="standings-title">המובילים</span>
+        <Icon name="trophy" label="טבלת התוצאות" />
         <span className="standings-hint">
           {correctIds.length}/{players.length} צדקו
         </span>
