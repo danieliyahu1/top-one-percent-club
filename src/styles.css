@@ -653,6 +653,8 @@ body {
   position: absolute;
   inset-inline: 0;
   top: 0;
+  height: 56px;
+  padding: 0 18px;
   opacity: 1;
   animation: none;
   transition: transform 0.7s ease;

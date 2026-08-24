@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { RoomPlayer } from "../game/multiplayer";
 import Icon from "./Icon";
 
@@ -12,7 +12,9 @@ interface StandingsProps {
 
 const PREV_HOLD_MS = 800;
 const TWEEN_MS = 900;
+const ROW_HEIGHT = 56;
 const ROW_GAP = 8;
+const ROW_STEP = ROW_HEIGHT + ROW_GAP;
 
 export default function Standings({
   players,
@@ -25,7 +27,6 @@ export default function Standings({
   const [displayScores, setDisplayScores] = useState<Record<string, number>>({
     ...prevScores,
   });
-  const [rowStep, setRowStep] = useState(60);
   const frameRef = useRef(0);
 
   const newRanked = [...players].sort((a, b) => b.score - a.score);
@@ -56,12 +57,7 @@ export default function Standings({
     };
     frameRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frameRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showingNew]);
-
-  const measureRef = useCallback((el: HTMLDivElement | null) => {
-    if (el) setRowStep(el.offsetHeight + ROW_GAP);
-  }, []);
 
   return (
     <div className="standings">
@@ -72,7 +68,7 @@ export default function Standings({
         </span>
       </div>
 
-      <div className="standings-rows" style={{ height: shown.length * rowStep }}>
+      <div className="standings-rows" style={{ height: shown.length * ROW_STEP }}>
         {shown.map((p, i) => {
           const rank = i + 1;
           const prev = prevRanks[p.id];
@@ -86,9 +82,8 @@ export default function Standings({
           return (
             <div
               key={p.id}
-              ref={i === 0 ? measureRef : undefined}
               className={rowClass}
-              style={{ transform: `translateY(${i * rowStep}px)` }}
+              style={{ transform: `translateY(${i * ROW_STEP}px)` }}
             >
               <span className="leader-rank">
                 {rank === 1 ? <Icon name="trophy" label="מקום ראשון" /> : rank}
