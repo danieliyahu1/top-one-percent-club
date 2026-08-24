@@ -52,6 +52,11 @@ export default function AnswerArea({ question, phase, reveal, myCorrect, onSubmi
               ) : (
                 <span className="answer-text">{answer.text}</span>
               )}
+              {isReveal && pickedId === answer.id && (
+                <span className={`answer-badge ${myCorrect ? "correct" : "wrong"}`}>
+                  <Icon name={myCorrect ? "check" : "cross"} label={myCorrect ? "נכון" : "טעות"} />
+                </span>
+              )}
             </button>
           );
         })}
