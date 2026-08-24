@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { RoomSnapshot } from "../game/multiplayer";
+import Icon from "./Icon";
 
 interface ResultsProps {
   room: RoomSnapshot;
@@ -28,8 +29,8 @@ export default function Results({ room, myId, isHost, onRestart, onHome }: Resul
       <div className="result-percent">{myRank}</div>
       <h1 className="title">סיימתם!</h1>
       {me && (
-        <p className="score">
-          {me.name}: <strong>{me.score}</strong> מתוך <strong>{room.total}</strong>
+        <p className="score" aria-label={`${me.name}: ${me.score} מתוך ${room.total}`}>
+          {me.name}: <strong>{me.score}</strong> / <strong>{room.total}</strong>
         </p>
       )}
 
@@ -39,7 +40,7 @@ export default function Results({ room, myId, isHost, onRestart, onHome }: Resul
             key={p.id}
             className={`leader-row ${p.id === myId ? "me" : ""}`}
           >
-            <span className="leader-rank">{i + 1}</span>
+            <span className="leader-rank">{i === 0 ? <Icon name="trophy" label="מקום ראשון" /> : i + 1}</span>
             <span className="leader-name">{p.name}</span>
             <span className="leader-score">{p.score}</span>
           </div>
@@ -47,26 +48,28 @@ export default function Results({ room, myId, isHost, onRestart, onHome }: Resul
       </div>
 
       {isHost && (
-        <button className="btn-primary" onClick={onRestart}>
-          שחק שוב
+        <button className="btn-primary" onClick={onRestart} aria-label="שחק שוב">
+          <Icon name="restart" label="שחק שוב" />
         </button>
       )}
 
       {confirmingLeave ? (
         <div className="confirm-box">
-          <p className="confirm-text">לצאת יסגור את החדר לכולם. להמשיך?</p>
+          <p className="confirm-text">
+            <Icon name="warning" label="אזהרה" />
+          </p>
           <div className="confirm-actions">
-            <button className="btn-primary btn-danger" onClick={onHome}>
-              כן, צא
+            <button className="btn-primary btn-danger" onClick={onHome} aria-label="כן, צא">
+              <Icon name="cross" label="כן, צא" />
             </button>
-            <button className="link-btn" onClick={() => setConfirmingLeave(false)}>
-              ביטול
+            <button className="link-btn" onClick={() => setConfirmingLeave(false)} aria-label="ביטול">
+              <Icon name="home" label="ביטול" />
             </button>
           </div>
         </div>
       ) : (
-        <button className="link-btn" onClick={handleHomeClick}>
-          לדף הבית
+        <button className="link-btn" onClick={handleHomeClick} aria-label="לדף הבית">
+          <Icon name="home" label="לדף הבית" />
         </button>
       )}
     </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { RoomSnapshot } from "../game/multiplayer";
 import QuestionCard from "./QuestionCard";
 import MultiAnswerArea from "./MultiAnswerArea";
+import Icon from "./Icon";
 
 interface RevealProps {
   room: RoomSnapshot;
@@ -44,12 +45,12 @@ export default function Reveal({ room, myId, isHost, clockOffset, onNext }: Reve
   return (
     <div className="app reveal">
       <div className="progress">
-        <span className="progress-text">
-          שאלה {room.index + 1} מתוך {room.total}
+        <span className="progress-text" aria-label={`שאלה ${room.index + 1} מתוך ${room.total}`}>
+          {room.index + 1} / {room.total}
         </span>
       </div>
 
-      <div className={`reveal-icon ${iconClass}`}>
+      <div className={`reveal-icon ${iconClass}`} role="img" aria-label="תוצאה">
         {icon}
       </div>
 
@@ -65,7 +66,10 @@ export default function Reveal({ room, myId, isHost, clockOffset, onNext }: Reve
       />
 
       {nonVoters.length > 0 && (
-        <p className="non-voters">לא ענו: {nonVoters.map((p) => p.name).join(", ")}</p>
+        <p className="non-voters">
+          <Icon name="wait" label="לא ענו" />
+          {nonVoters.map((p) => p.name).join(", ")}
+        </p>
       )}
 
       <div className="reveal-timer">
@@ -75,14 +79,14 @@ export default function Reveal({ room, myId, isHost, clockOffset, onNext }: Reve
             style={{ width: `${(totalMs / REVEAL_MS) * 100}%` }}
           />
         </div>
-        <span className="timer-text">
-          {isLast ? "לתוצאות בעוד" : "השאלה הבאה בעוד"} {remaining}
+        <span className="timer-text" aria-label="השניה הבאה בעוד">
+          <Icon name="wait" label="ממתין" /> {remaining}
         </span>
       </div>
 
       {isHost && (
-        <button className="btn-primary" onClick={onNext}>
-          {isLast ? "לתוצאות" : "השאלה הבאה"}
+        <button className="btn-primary" onClick={onNext} aria-label={isLast ? "לתוצאות" : "השאלה הבאה"}>
+          <Icon name={isLast ? "results" : "next"} label={isLast ? "לתוצאות" : "השאלה הבאה"} />
         </button>
       )}
     </div>

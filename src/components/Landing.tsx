@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import Icon from "./Icon";
 
 interface LandingProps {
   defaultCode?: string;
@@ -35,8 +36,8 @@ export default function Landing({
       <h1 className="title">האחוזון העליון</h1>
       <p className="subtitle">רק 1% יענו נכון על כולן</p>
 
-      <button className="btn-primary btn-solo" onClick={onPlaySolo}>
-        התחל משחק
+      <button className="btn-primary btn-solo" onClick={onPlaySolo} aria-label="התחל משחק">
+        <Icon name="play" label="התחל משחק" />
       </button>
 
       <div className="divider">
@@ -48,7 +49,7 @@ export default function Landing({
         onClick={() => setFriendsOpen((o) => !o)}
         aria-expanded={friendsOpen}
       >
-        {friendsOpen ? "שחק לבד ←" : "שחק עם חברים"}
+        <Icon name={friendsOpen ? "play" : "friends"} label="שחק עם חברים" />
       </button>
 
       {friendsOpen && (
@@ -58,39 +59,48 @@ export default function Landing({
               className={`toggle-btn ${mode === "create" ? "active" : ""}`}
               onClick={() => setMode("create")}
             >
-              צור חדר
+              <Icon name="create" label="צור חדר" />
             </button>
             <button
               className={`toggle-btn ${mode === "join" ? "active" : ""}`}
               onClick={() => setMode("join")}
             >
-              הצטרף
+              <Icon name="join" label="הצטרף" />
             </button>
           </div>
 
           <form className="landing-form" onSubmit={handleSubmit}>
-            <input
-              className="typed-input"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="השם שלך"
-            />
-            {mode === "join" && (
+            <div className="input-with-icon">
+              <Icon name="person" label="השם שלך" />
               <input
                 className="typed-input"
                 type="text"
-                value={code}
-                onChange={(e) => setCode(e.target.value.toUpperCase())}
-                placeholder="קוד החדר"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="השם שלך"
               />
+            </div>
+            {mode === "join" && (
+              <div className="input-with-icon">
+                <Icon name="code" label="קוד החדר" />
+                <input
+                  className="typed-input"
+                  type="text"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value.toUpperCase())}
+                  placeholder="קוד החדר"
+                />
+              </div>
             )}
             <button
               className="btn-primary"
               type="submit"
               disabled={busy || !name.trim() || (mode === "join" && !code.trim())}
             >
-              {busy ? "טוען..." : mode === "create" ? "צור חדר" : "הצטרף"}
+              <Icon
+                name={busy ? "wait" : "submit"}
+                label={busy ? "טוען..." : mode === "create" ? "צור חדר" : "הצטרף"}
+              />
             </button>
           </form>
 

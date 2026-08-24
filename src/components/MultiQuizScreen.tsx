@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { RoomSnapshot } from "../game/multiplayer";
 import QuestionCard from "./QuestionCard";
 import MultiAnswerArea from "./MultiAnswerArea";
+import Icon from "./Icon";
 
 interface QuizScreenProps {
   room: RoomSnapshot;
@@ -26,8 +27,8 @@ export default function QuizScreen({ room, myAnswered, clockOffset, onSubmit }: 
   return (
     <div className="app quiz">
       <div className="progress">
-        <span className="progress-text">
-          שאלה {room.index + 1} מתוך {room.total}
+        <span className="progress-text" aria-label={`שאלה ${room.index + 1} מתוך ${room.total}`}>
+          {room.index + 1} / {room.total}
         </span>
         <div className="progress-bar">
           <div
@@ -44,7 +45,9 @@ export default function QuizScreen({ room, myAnswered, clockOffset, onSubmit }: 
             style={{ width: `${(totalMs / 60000) * 100}%` }}
           />
         </div>
-        <span className="timer-text">{secondsLeft} שניות</span>
+        <span className="timer-text" aria-label={`${secondsLeft} שניות`}>
+          <Icon name="clock" label="זמן" /> {secondsLeft}
+        </span>
       </div>
 
       <QuestionCard question={question} />
@@ -58,10 +61,10 @@ export default function QuizScreen({ room, myAnswered, clockOffset, onSubmit }: 
       />
 
       {myAnswered && (
-        <div className="waiting">
+        <div className="waiting" aria-label={`ממתין לחברים ${answeredCount}/${room.players.length}`}>
           <span className="waiting-spinner" />
           <span>
-            ממתין לחברים ({answeredCount}/{room.players.length})
+            <Icon name="friends" label="חברים" /> {answeredCount}/{room.players.length}
           </span>
         </div>
       )}

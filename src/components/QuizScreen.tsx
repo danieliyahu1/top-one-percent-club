@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Question } from "../types";
 import QuestionCard from "./QuestionCard";
 import AnswerArea from "./AnswerArea";
+import Icon from "./Icon";
 
 const ANSWER_DELAY_SECONDS = 10;
 
@@ -47,8 +48,8 @@ export default function QuizScreen({
   return (
     <div className="app quiz">
       <div className="progress">
-        <span className="progress-text">
-          שאלה {index + 1} מתוך {total}
+        <span className="progress-text" aria-label={`שאלה ${index + 1} מתוך ${total}`}>
+          {index + 1} / {total}
         </span>
         <div className="progress-bar">
           <div
@@ -70,7 +71,9 @@ export default function QuizScreen({
 
       {answered && (
         <div className={`feedback ${wasCorrect ? "correct" : "wrong"}`}>
-          <span className="feedback-title">{wasCorrect ? "נכון!" : "טעות!"}</span>
+          <span className="feedback-title" role="img" aria-label={wasCorrect ? "נכון" : "טעות"}>
+            {wasCorrect ? "✓" : "✕"}
+          </span>
           <div className="timer">
             <div className="timer-bar">
               <div
@@ -80,12 +83,15 @@ export default function QuizScreen({
                 }}
               />
             </div>
-            <span className="timer-text">
-              {index + 1 >= total ? "לתוצאות בעוד" : "השאלה הבאה בעוד"} {secondsLeft}
+            <span className="timer-text" aria-label="השניה הבאה בעוד">
+              <Icon name="wait" label="ממתין" /> {secondsLeft}
             </span>
           </div>
-          <button className="btn-primary" onClick={onNext}>
-            {index + 1 >= total ? "לתוצאות" : "השאלה הבאה"}
+          <button className="btn-primary" onClick={onNext} aria-label="השאלה הבאה">
+            <Icon
+              name={index + 1 >= total ? "results" : "next"}
+              label={index + 1 >= total ? "לתוצאות" : "השאלה הבאה"}
+            />
           </button>
         </div>
       )}

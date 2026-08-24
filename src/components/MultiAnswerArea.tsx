@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import type { Question } from "../types";
 import type { RoomPhase, RoomSnapshot } from "../game/multiplayer";
+import Icon from "./Icon";
 
 interface AnswerAreaProps {
   question: Question;
@@ -103,7 +104,9 @@ function TypedAnswer({
     return (
       <div className="typed-reveal">
         <div className={`typed-answer-result ${correct ? "correct" : "wrong"}`}>
-          <span className="typed-result-text">{value || "לא ענית"}</span>
+          <span className="typed-result-text" role="img" aria-label="התשובה שלך">
+            {value || "⏳"}
+          </span>
         </div>
         {correct && (
           <div className="typed-answer-result correct">
@@ -125,8 +128,13 @@ function TypedAnswer({
         disabled={submitted}
         autoFocus
       />
-      <button className="btn-primary" type="submit" disabled={submitted || localValue.trim() === ""}>
-        שלח
+      <button
+        className="btn-primary"
+        type="submit"
+        disabled={submitted || localValue.trim() === ""}
+        aria-label="שלח"
+      >
+        <Icon name="submit" label="שלח" />
       </button>
     </form>
   );

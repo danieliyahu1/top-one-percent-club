@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import type { Question } from "../types";
 import { isAccepted } from "../game/validate";
+import Icon from "./Icon";
 
 interface AnswerAreaProps {
   question: Question;
@@ -72,8 +73,13 @@ function TypedAnswer({
         disabled={answered}
         autoFocus
       />
-      <button className="btn-primary" type="submit" disabled={answered || value.trim() === ""}>
-        שלח
+      <button
+        className="btn-primary"
+        type="submit"
+        disabled={answered || value.trim() === ""}
+        aria-label="שלח"
+      >
+        <Icon name="submit" label="שלח" />
       </button>
     </form>
   );

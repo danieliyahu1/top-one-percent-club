@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { RoomSnapshot } from "../game/multiplayer";
+import Icon from "./Icon";
 
 interface LobbyProps {
   room: RoomSnapshot;
@@ -24,7 +25,9 @@ export default function Lobby({ room, isHost, onStart, onLeave }: LobbyProps) {
       <h1 className="title">האחוזון העליון</h1>
 
       <div className="share-card">
-        <span className="share-label">שתף את קוד החדר</span>
+        <span className="share-label">
+          <Icon name="share" label="שתף את קוד החדר" />
+        </span>
         <span className="room-code">{room.code}</span>
         <p className="share-hint">שלח את הקוד או הקישור לחברים</p>
       </div>
@@ -39,28 +42,37 @@ export default function Lobby({ room, isHost, onStart, onLeave }: LobbyProps) {
       </div>
 
       {isHost ? (
-        <button className="btn-primary" onClick={onStart} disabled={room.players.length === 0}>
-          התחל משחק
+        <button
+          className="btn-primary"
+          onClick={onStart}
+          disabled={room.players.length === 0}
+          aria-label="התחל משחק"
+        >
+          <Icon name="play" label="התחל משחק" />
         </button>
       ) : (
-        <p className="share-hint">ממתין שהמנחה יתחיל...</p>
+        <p className="share-hint">
+          <Icon name="wait" label="ממתין שהמנחה יתחיל" />
+        </p>
       )}
 
       {confirmingLeave ? (
         <div className="confirm-box">
-          <p className="confirm-text">לצאת יסגור את החדר לכולם. להמשיך?</p>
+          <p className="confirm-text">
+            <Icon name="warning" label="אזהרה" />
+          </p>
           <div className="confirm-actions">
-            <button className="btn-primary btn-danger" onClick={onLeave}>
-              כן, צא
+            <button className="btn-primary btn-danger" onClick={onLeave} aria-label="כן, צא">
+              <Icon name="cross" label="כן, צא" />
             </button>
-            <button className="link-btn" onClick={() => setConfirmingLeave(false)}>
-              ביטול
+            <button className="link-btn" onClick={() => setConfirmingLeave(false)} aria-label="ביטול">
+              <Icon name="home" label="ביטול" />
             </button>
           </div>
         </div>
       ) : (
-        <button className="link-btn" onClick={handleLeaveClick}>
-          עזוב
+        <button className="link-btn" onClick={handleLeaveClick} aria-label="עזוב">
+          <Icon name="leave" label="עזוב" />
         </button>
       )}
     </div>

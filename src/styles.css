@@ -166,6 +166,46 @@ body {
   text-shadow: 0 0 80px rgba(245, 197, 66, 0.35);
 }
 
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 2px solid transparent;
+  border-radius: 14px;
+  padding: 0 18px;
+  transition: border-color 0.2s;
+}
+
+.input-with-icon:focus-within {
+  border-color: var(--accent);
+}
+
+.input-with-icon .icon {
+  color: var(--text-dim);
+  font-size: 18px;
+}
+
+.input-with-icon .typed-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 16px 0;
+  border-radius: 0;
+}
+
+.input-with-icon .typed-input:focus {
+  border-color: transparent;
+}
+
 .title {
   font-size: 44px;
   font-weight: 900;
