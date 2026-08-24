@@ -1,0 +1,25 @@
+{
+  "id": "q-51-1",
+  "percentage": 90,
+  "questionText": "איזו תמונה מתאימה להיות חלק מקבוצת התמונות הבאה?",
+  "questionImage": "51.1.jpeg",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "ans-aleph",
+      "type": "image",
+      "src": "51.2.jpeg"
+    },
+    {
+      "id": "ans-bet",
+      "type": "image",
+      "src": "51.3.jpeg"
+    },
+    {
+      "id": "ans-gimel",
+      "type": "image",
+      "src": "51.4.jpeg"
+    }
+  ],
+  "correctAnswerId": "ans-aleph"
+}
