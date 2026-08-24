@@ -1,4 +1,5 @@
 import { createServer } from "node:http";
+import { execSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import express from "express";
@@ -16,6 +17,11 @@ const io = new Server(httpServer, {
 const rooms = new RoomManager();
 
 app.use("/questions", express.static(join(process.cwd(), "questions")));
+
+if (!existsSync(DIST_DIR)) {
+  console.warn("[server] Client build (dist/) not found — building it now...");
+  execSync("npm run build", { stdio: "inherit" });
+}
 
 if (existsSync(DIST_DIR)) {
   app.use(express.static(DIST_DIR));
