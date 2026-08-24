@@ -64,7 +64,7 @@ function listModelFiles(dir: string, out: string[] = []): string[] {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name);
     if (entry.isDirectory()) {
-      listModelFiles(full, out);
+      if (entry.name.endsWith("-ready")) listModelFiles(full, out);
     } else if (entry.name.endsWith("-model.json")) {
       out.push(full);
     }
@@ -75,7 +75,7 @@ function listModelFiles(dir: string, out: string[] = []): string[] {
 export function loadQuestions(): Question[] {
   const questions: Question[] = [];
   for (const file of listModelFiles(QUESTIONS_DIR)) {
-    const raw: RawQuestion = JSON.parse(readFileSync(file, "utf8"));
+    const raw: RawQuestion = JSON.parse(readFileSync(file, "utf8").replace(/^\uFEFF/, ""));
     if (!raw) continue;
     const rel = file.slice(QUESTIONS_DIR.length + 1).replace(/\\/g, "/");
     questions.push(coerceQuestion(raw, dirname(rel)));
