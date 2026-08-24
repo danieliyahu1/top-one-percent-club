@@ -77,11 +77,26 @@ export default function App() {
     }
 
     if (room.phase === "question") {
-      return <MultiQuizScreen room={room} myAnswered={myAnswered} onSubmit={handleAnswer} />;
+      return (
+        <MultiQuizScreen
+          room={room}
+          myAnswered={myAnswered}
+          clockOffset={mp.clockOffset}
+          onSubmit={handleAnswer}
+        />
+      );
     }
 
     if (room.phase === "reveal") {
-      return <Reveal room={room} myId={myId} isHost={mp.isHost} onNext={mp.next} />;
+      return (
+        <Reveal
+          room={room}
+          myId={myId}
+          isHost={mp.isHost}
+          clockOffset={mp.clockOffset}
+          onNext={mp.next}
+        />
+      );
     }
 
     return (

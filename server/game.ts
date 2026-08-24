@@ -260,6 +260,7 @@ export class RoomManager {
       phase: room.phase,
       deadline: room.deadline,
       revealDeadline: room.revealDeadline,
+      serverNow: Date.now(),
       question: publicQuestion(room),
       reveal,
     };

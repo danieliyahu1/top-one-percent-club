@@ -615,6 +615,11 @@ body {
   text-shadow: 0 0 60px rgba(229, 72, 77, 0.3);
 }
 
+.reveal-icon.timeout {
+  color: var(--text-dim);
+  text-shadow: 0 0 60px rgba(138, 147, 176, 0.3);
+}
+
 .reveal-timer {
   width: 100%;
   display: flex;

@@ -6,10 +6,11 @@ import MultiAnswerArea from "./MultiAnswerArea";
 interface QuizScreenProps {
   room: RoomSnapshot;
   myAnswered: boolean;
+  clockOffset: number;
   onSubmit: (answerId: string | null, text?: string) => void;
 }
 
-export default function QuizScreen({ room, myAnswered, onSubmit }: QuizScreenProps) {
+export default function QuizScreen({ room, myAnswered, clockOffset, onSubmit }: QuizScreenProps) {
   const question = room.question!;
   const [now, setNow] = useState(Date.now());
 
@@ -18,7 +19,7 @@ export default function QuizScreen({ room, myAnswered, onSubmit }: QuizScreenPro
     return () => clearInterval(id);
   }, []);
 
-  const totalMs = Math.max(0, room.deadline - now);
+  const totalMs = Math.max(0, room.deadline - (now + clockOffset));
   const secondsLeft = Math.ceil(totalMs / 1000);
   const answeredCount = room.players.filter((p) => p.answered).length;
 

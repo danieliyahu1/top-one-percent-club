@@ -14,6 +14,7 @@ export function useMultiplayer() {
   const [myId, setMyId] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [clockOffset, setClockOffset] = useState(0);
 
   useEffect(() => {
     const refreshId = () => setMyId(socket.id ?? "");
@@ -21,6 +22,7 @@ export function useMultiplayer() {
     socket.on("state", (snapshot: RoomSnapshot) => {
       refreshId();
       setRoom(snapshot);
+      setClockOffset(snapshot.serverNow - Date.now());
     });
     socket.on("room:closed", () => {
       setRoom(null);
@@ -118,6 +120,7 @@ export function useMultiplayer() {
     myId,
     error,
     busy,
+    clockOffset,
     isHost,
     createRoom,
     joinRoom,

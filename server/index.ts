@@ -16,7 +16,17 @@ const io = new Server(httpServer, {
 });
 const rooms = new RoomManager();
 
-app.use("/questions", express.static(join(process.cwd(), "questions")));
+app.use(
+  "/questions",
+  (req, res, next) => {
+    if (!/\.(jpg|jpeg|png)$/i.test(req.url)) {
+      res.status(404).end();
+      return;
+    }
+    next();
+  },
+  express.static(join(process.cwd(), "questions")),
+);
 
 if (!existsSync(DIST_DIR)) {
   console.warn("[server] Client build (dist/) not found — building it now...");
