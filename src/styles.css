@@ -736,6 +736,16 @@ body {
   animation: rise 0.45s ease both, flash-down 0.8s ease-out 0.3s both;
 }
 
+/* Inside the standings table rows are positioned by inline transform,
+   so only the box-shadow flash may run - rise would pin them to the top. */
+.standings-rows .leader-row.move-up {
+  animation: flash-up 0.8s ease-out 0.3s both;
+}
+
+.standings-rows .leader-row.move-down {
+  animation: flash-down 0.8s ease-out 0.3s both;
+}
+
 .leader-row.got-point {
   border-color: var(--correct);
   background: var(--correct-glow);
