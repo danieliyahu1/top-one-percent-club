@@ -19,16 +19,17 @@ export default function Landing({
   onJoin,
 }: LandingProps) {
   const [friendsOpen, setFriendsOpen] = useState(!!defaultCode);
-  const [mode, setMode] = useState<"create" | "join">(defaultCode ? "join" : "create");
   const [name, setName] = useState("");
   const [code, setCode] = useState(defaultCode ?? "");
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!name.trim()) return;
-    if (mode === "create") onCreate(name.trim());
-    else if (code.trim()) onJoin(code.trim(), name.trim());
+    if (code.trim()) onJoin(code.trim(), name.trim());
+    else onCreate(name.trim());
   }
+
+  const willJoin = code.trim().length > 0;
 
   return (
     <div className="app landing">
@@ -36,39 +37,17 @@ export default function Landing({
       <h1 className="title">האחוזון העליון</h1>
       <p className="subtitle">רק 1% יענו נכון על כולן</p>
 
-      <button className="btn-primary btn-solo" onClick={onPlaySolo} aria-label="התחל משחק">
-        <Icon name="play" label="התחל משחק" />
-      </button>
-
-      <div className="divider">
-        <span>או</span>
-      </div>
-
       <button
-        className="btn-friends"
+        className="btn-primary btn-hero"
         onClick={() => setFriendsOpen((o) => !o)}
         aria-expanded={friendsOpen}
       >
-        <Icon name={friendsOpen ? "play" : "friends"} label="שחק עם חברים" />
+        <Icon name="friends" label="שחק עם חברים" />
+        <span>שחק עם חברים</span>
       </button>
 
       {friendsOpen && (
         <div className="friends-panel">
-          <div className="join-toggle">
-            <button
-              className={`toggle-btn ${mode === "create" ? "active" : ""}`}
-              onClick={() => setMode("create")}
-            >
-              <Icon name="create" label="צור חדר" />
-            </button>
-            <button
-              className={`toggle-btn ${mode === "join" ? "active" : ""}`}
-              onClick={() => setMode("join")}
-            >
-              <Icon name="join" label="הצטרף" />
-            </button>
-          </div>
-
           <form className="landing-form" onSubmit={handleSubmit}>
             <div className="input-with-icon">
               <Icon name="person" label="השם שלך" />
@@ -80,33 +59,37 @@ export default function Landing({
                 placeholder="השם שלך"
               />
             </div>
-            {mode === "join" && (
-              <div className="input-with-icon">
-                <Icon name="code" label="קוד החדר" />
-                <input
-                  className="typed-input"
-                  type="text"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value.toUpperCase())}
-                  placeholder="קוד החדר"
-                />
-              </div>
-            )}
+            <div className="input-with-icon">
+              <Icon name="code" label="קוד החדר" />
+              <input
+                className="typed-input"
+                type="text"
+                value={code}
+                onChange={(e) => setCode(e.target.value.toUpperCase())}
+                placeholder="קוד חדר (אופציונלי)"
+              />
+            </div>
             <button
               className="btn-primary"
               type="submit"
-              disabled={busy || !name.trim() || (mode === "join" && !code.trim())}
+              disabled={busy || !name.trim()}
             >
               <Icon
-                name={busy ? "wait" : "submit"}
-                label={busy ? "טוען..." : mode === "create" ? "צור חדר" : "הצטרף"}
+                name={busy ? "wait" : willJoin ? "join" : "create"}
+                label={busy ? "טוען..." : willJoin ? "הצטרף" : "צור חדר"}
               />
+              <span>{busy ? "טוען..." : willJoin ? "הצטרף" : "צור חדר"}</span>
             </button>
           </form>
 
           {error && <p className="form-error">{error}</p>}
         </div>
       )}
+
+      <button className="link-btn" onClick={onPlaySolo} aria-label="משחק יחיד">
+        <Icon name="gamepad" label="משחק יחיד" />
+        <span>משחק יחיד</span>
+      </button>
     </div>
   );
 }

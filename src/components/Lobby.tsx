@@ -48,7 +48,7 @@ export default function Lobby({ room, isHost, onStart, onLeave }: LobbyProps) {
           disabled={room.players.length === 0}
           aria-label="התחל משחק"
         >
-          <Icon name="play" label="התחל משחק" />
+          <Icon name="gamepad" label="התחל משחק" />
         </button>
       ) : (
         <p className="share-hint">
