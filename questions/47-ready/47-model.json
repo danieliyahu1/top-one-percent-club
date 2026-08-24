@@ -1,0 +1,10 @@
+{
+  "id": "q-traffic-sign-code",
+  "percentage": -1,
+  "questionText": "המורה הפרטי שלי לתאוריה שכח את קוד הכניסה לבניין שלו.\nמה הקוד בן 3 הספרות, אם ⬆️ = 4 ?",
+  "questionImage": "47.1.jpeg",
+  "answerMode": "typed",
+  "acceptedAnswers": [
+    "380"
+  ]
+}

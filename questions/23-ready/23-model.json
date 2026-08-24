@@ -1,0 +1,10 @@
+{
+  "id": "q-mah",
+  "percentage": -1,
+  "questionText": "מה היא התשובה לשאלה הבאה:\nאיזו מילה בת שתי אותיות היא התשובה הנכונה היחידה לשאלה הזו?",
+  "answerMode": "typed",
+  "acceptedAnswers": [
+    "מה",
+    "מה?"
+  ]
+}

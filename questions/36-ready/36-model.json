@@ -1,0 +1,30 @@
+{
+  "id": "q-standing-in-line",
+  "percentage": -1,
+  "questionText": "מי יכול או יכולה להגיד: \"אני מאחורי כל מי שמאחוריי\"?",
+  "questionImage": "36.1.jpeg",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "a",
+      "type": "text",
+      "text": "דורית"
+    },
+    {
+      "id": "b",
+      "type": "text",
+      "text": "קובי"
+    },
+    {
+      "id": "c",
+      "type": "text",
+      "text": "רחל"
+    },
+    {
+      "id": "d",
+      "type": "text",
+      "text": "ניב"
+    }
+  ],
+  "correctAnswerId": "d"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "q-granny-aziza-recipe",
+  "percentage": -1,
+  "questionText": "זה המתכון המיוחד של סבתא עזיזה לעוגת הבית. מה חסר בו?\n\nחבילת חמאה\nתריסר תפוחים\nמעט מים\nקילו קבב",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "a",
+      "type": "text",
+      "text": "טיפה סוכר"
+    },
+    {
+      "id": "b",
+      "type": "text",
+      "text": "בקבוק עמבה"
+    },
+    {
+      "id": "c",
+      "type": "text",
+      "text": "שלוש ביצים"
+    },
+    {
+      "id": "d",
+      "type": "text",
+      "text": "כרוב כבוש"
+    }
+  ],
+  "correctAnswerId": "d"
+}

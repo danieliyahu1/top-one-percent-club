@@ -1,0 +1,30 @@
+{
+  "id": "q-missing-square",
+  "percentage": 90,
+  "questionText": "מה הריבוע החסר?",
+  "questionImage": "25.1.jpg",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "a",
+      "type": "image",
+      "src": "25.2.jpeg"
+    },
+    {
+      "id": "b",
+      "type": "image",
+      "src": "25.3.jpeg"
+    },
+    {
+      "id": "c",
+      "type": "image",
+      "src": "25.4.jpeg"
+    },
+    {
+      "id": "d",
+      "type": "image",
+      "src": "25.5.jpeg"
+    }
+  ],
+  "correctAnswerId": "a"
+}

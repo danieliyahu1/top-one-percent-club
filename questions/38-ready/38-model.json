@@ -1,0 +1,24 @@
+{
+  "id": "q-currency-endings",
+  "percentage": -1,
+  "questionText": "איזו מילה הכי מתאימה להשלים את המשפט הבא?\n\nברבאט יאירו חקיין טרופי ____ ?",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "a",
+      "type": "text",
+      "text": "לתנור"
+    },
+    {
+      "id": "b",
+      "type": "text",
+      "text": "מסלסלה"
+    },
+    {
+      "id": "c",
+      "type": "text",
+      "text": "במשקל"
+    }
+  ],
+  "correctAnswerId": "c"
+}

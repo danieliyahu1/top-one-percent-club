@@ -1,0 +1,30 @@
+{
+  "id": "q-alice-wizard-of-oz",
+  "percentage": 25,
+  "questionText": "מה אליס מתכוונת לבקש מהקוסם מארץ עוץ כשהיא תגיע אליו?",
+  "questionImage": "41.1.jpeg",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "a",
+      "type": "text",
+      "text": "להישאר בארץ עוץ"
+    },
+    {
+      "id": "b",
+      "type": "text",
+      "text": "לחזור הביתה"
+    },
+    {
+      "id": "c",
+      "type": "text",
+      "text": "להרוג את המכשפה מהמערב"
+    },
+    {
+      "id": "d",
+      "type": "text",
+      "text": "כלום"
+    }
+  ],
+  "correctAnswerId": "d"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "q-common-word-tevat",
+  "percentage": -1,
+  "questionText": "מהי המילה המשותפת למילים הבאות?\n\nנוח, נגינה, אוצר, דואר",
+  "answerMode": "typed",
+  "acceptedAnswers": [
+    "תיבת",
+    "תיבה"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "q-egg-or-chicken",
+  "percentage": -1,
+  "questionText": "אצלנו הביצה קודמת לתרנגולת. אבל מה יש יותר?",
+  "questionImage": "30.1.jpeg",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "a",
+      "type": "text",
+      "text": "יותר ביצים"
+    },
+    {
+      "id": "b",
+      "type": "text",
+      "text": "יותר תרנגולות"
+    },
+    {
+      "id": "c",
+      "type": "text",
+      "text": "אותו מספר של ביצים ותרנגולות"
+    }
+  ],
+  "correctAnswerId": "a"
+}
