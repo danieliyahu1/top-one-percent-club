@@ -105,7 +105,7 @@ function TypedAnswer({
       <div className="typed-reveal">
         <div className={`typed-answer-result ${correct ? "correct" : "wrong"}`}>
           <span className="typed-result-text" role="img" aria-label="התשובה שלך">
-            {value || "⏳"}
+            {value || <Icon name="wait" label="לא ענית" />}
           </span>
         </div>
         {correct && (

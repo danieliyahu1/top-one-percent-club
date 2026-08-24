@@ -33,13 +33,13 @@ export default function Reveal({ room, myId, isHost, clockOffset, onNext }: Reve
   const isLast = room.index + 1 >= room.total;
 
   let iconClass = "wrong";
-  let icon = "✗";
+  let iconName: "cross" | "check" | "wait" = "cross";
   if (myCorrect) {
     iconClass = "correct";
-    icon = "✓";
+    iconName = "check";
   } else if (!answered) {
     iconClass = "timeout";
-    icon = "⌛";
+    iconName = "wait";
   }
 
   return (
@@ -51,7 +51,7 @@ export default function Reveal({ room, myId, isHost, clockOffset, onNext }: Reve
       </div>
 
       <div className={`reveal-icon ${iconClass}`} role="img" aria-label="תוצאה">
-        {icon}
+        <Icon name={iconName} label="תוצאה" />
       </div>
 
       <QuestionCard question={question} />

@@ -174,6 +174,33 @@ body {
   vertical-align: middle;
 }
 
+.icon svg {
+  width: 1.4em;
+  height: 1.4em;
+  display: block;
+}
+
+.btn-primary .icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+.btn-solo .icon svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.link-btn .icon svg,
+.btn-friends .icon svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.toggle-btn .icon svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
 .input-with-icon {
   display: flex;
   align-items: center;
@@ -645,19 +672,33 @@ body {
   line-height: 1;
 }
 
+.reveal-icon .icon svg {
+  width: 1em;
+  height: 1em;
+}
+
 .reveal-icon.correct {
   color: var(--correct);
-  text-shadow: 0 0 60px rgba(62, 207, 110, 0.35);
+}
+
+.reveal-icon.correct svg {
+  filter: drop-shadow(0 0 14px rgba(62, 207, 110, 0.5));
 }
 
 .reveal-icon.wrong {
   color: var(--wrong);
-  text-shadow: 0 0 60px rgba(229, 72, 77, 0.3);
+}
+
+.reveal-icon.wrong svg {
+  filter: drop-shadow(0 0 14px rgba(229, 72, 77, 0.45));
 }
 
 .reveal-icon.timeout {
   color: var(--text-dim);
-  text-shadow: 0 0 60px rgba(138, 147, 176, 0.3);
+}
+
+.reveal-icon.timeout svg {
+  filter: drop-shadow(0 0 14px rgba(138, 147, 176, 0.45));
 }
 
 .reveal-timer {

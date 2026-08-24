@@ -24,32 +24,138 @@ export type IconName =
   | "person"
   | "code";
 
-const GLYPHS: Record<IconName, string> = {
-  play: "▶",
-  next: "⏭",
-  restart: "↻",
-  home: "⌂",
-  leave: "🚪",
-  check: "✓",
-  cross: "✕",
-  clock: "⏱",
-  friends: "👥",
-  create: "➕",
-  join: "🔑",
-  submit: "➤",
-  share: "🔗",
-  wait: "⏳",
-  trophy: "🏆",
-  results: "🏁",
-  warning: "⚠",
-  person: "👤",
-  code: "🔑",
+const PATHS: Record<IconName, JSX.Element> = {
+  play: <polygon points="6 3 20 12 6 21 6 3" />,
+  next: (
+    <>
+      <path d="M5 4l10 8-10 8V4z" />
+      <line x1="19" y1="4" x2="19" y2="20" />
+    </>
+  ),
+  restart: (
+    <>
+      <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+      <polyline points="3 3 3 8 8 8" />
+    </>
+  ),
+  home: (
+    <>
+      <path d="M3 10.5L12 3l9 7.5" />
+      <path d="M5 9.5V21h14V9.5" />
+    </>
+  ),
+  leave: (
+    <>
+      <path d="M15 3h5v18h-5" />
+      <path d="M10 9l-4 3 4 3" />
+      <line x1="6" y1="12" x2="14" y2="12" />
+    </>
+  ),
+  check: <polyline points="20 6 9 17 4 12" />,
+  cross: (
+    <>
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <polyline points="12 7 12 12 15 14" />
+    </>
+  ),
+  friends: (
+    <>
+      <circle cx="9" cy="8" r="3" />
+      <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+      <circle cx="17" cy="9" r="2.5" />
+      <path d="M15 14.5c2.8.5 6 2.2 6 5.5" />
+    </>
+  ),
+  create: (
+    <>
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </>
+  ),
+  join: (
+    <>
+      <circle cx="8" cy="15" r="4" />
+      <path d="M11 12l8-8" />
+      <line x1="16" y1="7" x2="19" y2="10" />
+    </>
+  ),
+  submit: (
+    <>
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <polyline points="14 5 21 12 14 19" />
+    </>
+  ),
+  share: (
+    <>
+      <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" />
+      <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" />
+    </>
+  ),
+  wait: (
+    <>
+      <line x1="6" y1="3" x2="18" y2="3" />
+      <line x1="6" y1="21" x2="18" y2="21" />
+      <path d="M6 3v3c0 2 2 3 6 3s6-1 6-3V3" />
+      <path d="M6 21v-3c0-2 2-3 6-3s6 1 6 3v3" />
+    </>
+  ),
+  trophy: (
+    <>
+      <path d="M8 21h8" />
+      <path d="M12 17v4" />
+      <path d="M7 4h10v6a5 5 0 0 1-10 0V4z" />
+      <path d="M17 5h3v2a3 3 0 0 1-3 3" />
+      <path d="M7 5H4v2a3 3 0 0 0 3 3" />
+    </>
+  ),
+  results: (
+    <>
+      <path d="M5 3v18" />
+      <path d="M5 4h11l-2 4 2 4H5" />
+    </>
+  ),
+  warning: (
+    <>
+      <path d="M12 3L2 20h20L12 3z" />
+      <line x1="12" y1="10" x2="12" y2="14" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
+    </>
+  ),
+  person: (
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 20c0-3.3 2.7-6 6-6h4c3.3 0 6 2.7 6 6" />
+    </>
+  ),
+  code: (
+    <>
+      <circle cx="8" cy="15" r="4" />
+      <path d="M11 12l8-8" />
+      <line x1="16" y1="7" x2="19" y2="10" />
+    </>
+  ),
 };
 
 export default function Icon({ name, label }: IconProps) {
   return (
     <span className="icon" role="img" aria-label={label}>
-      {GLYPHS[name]}
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        {PATHS[name]}
+      </svg>
     </span>
   );
 }

@@ -72,7 +72,7 @@ export default function QuizScreen({
       {answered && (
         <div className={`feedback ${wasCorrect ? "correct" : "wrong"}`}>
           <span className="feedback-title" role="img" aria-label={wasCorrect ? "נכון" : "טעות"}>
-            {wasCorrect ? "✓" : "✕"}
+            <Icon name={wasCorrect ? "check" : "cross"} label={wasCorrect ? "נכון" : "טעות"} />
           </span>
           <div className="timer">
             <div className="timer-bar">
