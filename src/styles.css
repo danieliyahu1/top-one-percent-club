@@ -61,21 +61,6 @@ body {
   animation: rise 0.6s ease both;
 }
 
-.btn-hero {
-  padding: 18px 52px;
-  font-size: 20px;
-}
-
-.friends-panel {
-  width: 100%;
-  max-width: 380px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  animation: rise 0.4s ease both;
-}
-
 .link-btn {
   background: none;
   border: none;
@@ -154,11 +139,6 @@ body {
 .btn-primary .icon svg {
   width: 1em;
   height: 1em;
-}
-
-.btn-hero .icon svg {
-  width: 1.1em;
-  height: 1.1em;
 }
 
 .link-btn .icon svg {
