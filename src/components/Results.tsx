@@ -2,9 +2,10 @@ interface ResultsProps {
   score: number;
   total: number;
   onRestart: () => void;
+  onHome?: () => void;
 }
 
-export default function Results({ score, total, onRestart }: ResultsProps) {
+export default function Results({ score, total, onRestart, onHome }: ResultsProps) {
   const pct = Math.round((score / total) * 100);
   let message = "המשך להתאמן";
   if (pct === 100) message = "אתה באחוזון העליון";
@@ -22,6 +23,12 @@ export default function Results({ score, total, onRestart }: ResultsProps) {
       <button className="btn-primary" onClick={onRestart}>
         שחק שוב
       </button>
+
+      {onHome && (
+        <button className="link-btn" onClick={onHome}>
+          לדף הבית
+        </button>
+      )}
     </div>
   );
 }
