@@ -1,16 +1,16 @@
 import { useState, type FormEvent } from "react";
 import type { Question } from "../types";
 import type { RoomPhase, RoomSnapshot } from "../game/multiplayer";
-import { isAccepted } from "../game/validate";
 
 interface AnswerAreaProps {
   question: Question;
   phase: RoomPhase;
   reveal?: RoomSnapshot["reveal"];
+  myCorrect: boolean;
   onSubmit: (answerId: string | null, text?: string) => void;
 }
 
-export default function AnswerArea({ question, phase, reveal, onSubmit }: AnswerAreaProps) {
+export default function AnswerArea({ question, phase, reveal, myCorrect, onSubmit }: AnswerAreaProps) {
   const [pickedId, setPickedId] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [submittedText, setSubmittedText] = useState("");
@@ -30,7 +30,8 @@ export default function AnswerArea({ question, phase, reveal, onSubmit }: Answer
         {(question.answers ?? []).map((answer) => {
           let className = "answer";
           if (isReveal) {
-            if (answer.id === reveal?.correctAnswerId) className += " correct reveal-correct";
+            if (myCorrect && answer.id === reveal?.correctAnswerId)
+              className += " correct reveal-correct";
             else if (pickedId === answer.id) className += " wrong";
             else className += " dim";
           } else if (submitted && pickedId === answer.id) {
@@ -61,6 +62,7 @@ export default function AnswerArea({ question, phase, reveal, onSubmit }: Answer
     <TypedAnswer
       submitted={submitted}
       isReveal={isReveal}
+      myCorrect={myCorrect}
       accepted={reveal?.acceptedAnswers}
       value={submittedText}
       onSubmit={(text) => {
@@ -75,12 +77,14 @@ export default function AnswerArea({ question, phase, reveal, onSubmit }: Answer
 function TypedAnswer({
   submitted,
   isReveal,
+  myCorrect,
   accepted,
   value,
   onSubmit,
 }: {
   submitted: boolean;
   isReveal: boolean;
+  myCorrect: boolean;
   accepted: string[] | undefined;
   value: string;
   onSubmit: (text: string) => void;
@@ -95,15 +99,17 @@ function TypedAnswer({
   }
 
   if (isReveal) {
-    const correct = value !== "" && isAccepted(value, accepted);
+    const correct = myCorrect;
     return (
       <div className="typed-reveal">
         <div className={`typed-answer-result ${correct ? "correct" : "wrong"}`}>
           <span className="typed-result-text">{value || "לא ענית"}</span>
         </div>
-        <div className="typed-answer-result correct">
-          <span className="typed-result-text">{accepted?.join(" / ") ?? ""}</span>
-        </div>
+        {correct && (
+          <div className="typed-answer-result correct">
+            <span className="typed-result-text">{accepted?.join(" / ") ?? ""}</span>
+          </div>
+        )}
       </div>
     );
   }

@@ -230,7 +230,7 @@ export class RoomManager {
     return room;
   }
 
-  snapshot(room: Room) {
+  snapshot(room: Room, viewerId?: string) {
     const correctPlayers = room.players
       .filter((p) => p.answered && p.correct)
       .map((p) => p.id);
@@ -239,9 +239,11 @@ export class RoomManager {
       | undefined;
     if (room.phase === "reveal") {
       const q = room.questions[room.order[room.index]];
+      const viewer = room.players.find((p) => p.id === viewerId);
+      const viewerCorrect = !!viewer?.answered && !!viewer?.correct;
       reveal = {
-        correctAnswerId: q.correctAnswerId,
-        acceptedAnswers: q.acceptedAnswers,
+        ...(viewerCorrect ? { correctAnswerId: q.correctAnswerId } : {}),
+        ...(viewerCorrect ? { acceptedAnswers: q.acceptedAnswers } : {}),
         correctPlayers,
       };
     }

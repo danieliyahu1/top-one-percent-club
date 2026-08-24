@@ -60,6 +60,7 @@ export default function Reveal({ room, myId, isHost, clockOffset, onNext }: Reve
         question={question}
         phase="reveal"
         reveal={reveal}
+        myCorrect={myCorrect}
         onSubmit={() => {}}
       />
 

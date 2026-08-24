@@ -47,7 +47,9 @@ if (existsSync(DIST_DIR)) {
 function emitRoom(code: string) {
   const room = rooms.get(code);
   if (!room) return;
-  io.to(code).emit("state", rooms.snapshot(room));
+  for (const player of room.players) {
+    io.to(player.id).emit("state", rooms.snapshot(room, player.id));
+  }
 }
 
 rooms.onChange = (code) => emitRoom(code);
@@ -74,7 +76,7 @@ io.on("connection", (socket) => {
     rooms.addPlayer(room.code, socket.id, String(name).trim() || "Guest");
     socket.join(room.code);
     socket.data.room = room.code;
-    ack?.({ ok: true, code: room.code, snapshot: rooms.snapshot(room) });
+    ack?.({ ok: true, code: room.code, snapshot: rooms.snapshot(room, socket.id) });
     emitRoom(room.code);
   });
 
@@ -92,7 +94,7 @@ io.on("connection", (socket) => {
     }
     socket.join(code);
     socket.data.room = code;
-    ack?.({ ok: true, code, snapshot: rooms.snapshot(room) });
+    ack?.({ ok: true, code, snapshot: rooms.snapshot(room, socket.id) });
     emitRoom(code);
   });
 

@@ -53,6 +53,7 @@ export default function QuizScreen({ room, myAnswered, clockOffset, onSubmit }: 
         key={question.id}
         question={question}
         phase={room.phase}
+        myCorrect={false}
         onSubmit={onSubmit}
       />
 

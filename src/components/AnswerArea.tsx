@@ -5,10 +5,11 @@ import { isAccepted } from "../game/validate";
 interface AnswerAreaProps {
   question: Question;
   answered: boolean;
+  wasCorrect: boolean;
   onSubmit: (isCorrect: boolean) => void;
 }
 
-export default function AnswerArea({ question, answered, onSubmit }: AnswerAreaProps) {
+export default function AnswerArea({ question, answered, wasCorrect, onSubmit }: AnswerAreaProps) {
   const [pickedId, setPickedId] = useState<string | null>(null);
 
   if (question.answerMode === "choice") {
@@ -16,8 +17,7 @@ export default function AnswerArea({ question, answered, onSubmit }: AnswerAreaP
       <div className="answers">
         {(question.answers ?? []).map((answer) => {
           let className = "answer";
-          if (answer.id === question.correctAnswerId) className += " correct";
-          else if (answered && pickedId === answer.id) className += " wrong";
+          if (answered && pickedId === answer.id) className += wasCorrect ? " correct" : " wrong";
           else if (answered) className += " dim";
           return (
             <button

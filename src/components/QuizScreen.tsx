@@ -64,6 +64,7 @@ export default function QuizScreen({
         key={question.id}
         question={question}
         answered={answered}
+        wasCorrect={wasCorrect}
         onSubmit={onSubmit}
       />
 
