@@ -18,7 +18,7 @@ export default function Landing({
   onJoin,
 }: LandingProps) {
   const [friendsOpen, setFriendsOpen] = useState(!!defaultCode);
-  const [mode, setMode] = useState<"create" | "join">("create");
+  const [mode, setMode] = useState<"create" | "join">(defaultCode ? "join" : "create");
   const [name, setName] = useState("");
   const [code, setCode] = useState(defaultCode ?? "");
 

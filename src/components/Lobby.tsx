@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { RoomSnapshot } from "../game/multiplayer";
 
 interface LobbyProps {
@@ -8,6 +9,16 @@ interface LobbyProps {
 }
 
 export default function Lobby({ room, isHost, onStart, onLeave }: LobbyProps) {
+  const [confirmingLeave, setConfirmingLeave] = useState(false);
+
+  function handleLeaveClick() {
+    if (isHost) {
+      setConfirmingLeave(true);
+    } else {
+      onLeave();
+    }
+  }
+
   return (
     <div className="app lobby">
       <h1 className="title">האחוזון העליון</h1>
@@ -35,9 +46,23 @@ export default function Lobby({ room, isHost, onStart, onLeave }: LobbyProps) {
         <p className="share-hint">ממתין שהמנחה יתחיל...</p>
       )}
 
-      <button className="link-btn" onClick={onLeave}>
-        עזוב
-      </button>
+      {confirmingLeave ? (
+        <div className="confirm-box">
+          <p className="confirm-text">לצאת יסגור את החדר לכולם. להמשיך?</p>
+          <div className="confirm-actions">
+            <button className="btn-primary btn-danger" onClick={onLeave}>
+              כן, צא
+            </button>
+            <button className="link-btn" onClick={() => setConfirmingLeave(false)}>
+              ביטול
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button className="link-btn" onClick={handleLeaveClick}>
+          עזוב
+        </button>
+      )}
     </div>
   );
 }

@@ -16,15 +16,20 @@ export function useMultiplayer() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    socket.on("connect", () => setMyId(socket.id ?? ""));
-    socket.on("state", (snapshot: RoomSnapshot) => setRoom(snapshot));
+    const refreshId = () => setMyId(socket.id ?? "");
+    socket.on("connect", refreshId);
+    socket.on("state", (snapshot: RoomSnapshot) => {
+      refreshId();
+      setRoom(snapshot);
+    });
     socket.on("room:closed", () => {
       setRoom(null);
       setError("המנחה סגר את החדר");
     });
     socket.on("connect_error", () => setError("חיבור נכשל"));
+    if (socket.connected) refreshId();
     return () => {
-      socket.off("connect");
+      socket.off("connect", refreshId);
       socket.off("state");
       socket.off("room:closed");
       socket.off("connect_error");
@@ -42,31 +47,33 @@ export function useMultiplayer() {
   }, []);
 
   const createRoom = useCallback(
-    async (name: string) => {
+    async (name: string): Promise<JoinResult> => {
       setBusy(true);
       setError(null);
       const res = await requestJoin({ name });
       setBusy(false);
       if (!res.ok) {
         setError(res.error ?? "שגיאה ביצירת החדר");
-        return false;
+        return res;
       }
-      return true;
+      if (res.snapshot) setRoom(res.snapshot);
+      return res;
     },
     [requestJoin],
   );
 
   const joinRoom = useCallback(
-    async (code: string, name: string) => {
+    async (code: string, name: string): Promise<JoinResult> => {
       setBusy(true);
       setError(null);
       const res = await requestJoin({ code, name });
       setBusy(false);
       if (!res.ok) {
         setError(res.error === "name_taken" ? "השם תפוס בחדר" : "החדר לא נמצא");
-        return false;
+        return res;
       }
-      return true;
+      if (res.snapshot) setRoom(res.snapshot);
+      return res;
     },
     [requestJoin],
   );

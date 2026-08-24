@@ -40,6 +40,7 @@ function leaveRoom(socket: Socket) {
   socket.data.room = null;
   const room = rooms.get(code);
   if (!room) return;
+  socket.leave(code);
   if (room.hostId === socket.id) {
     rooms.remove(code);
     io.to(code).emit("room:closed");

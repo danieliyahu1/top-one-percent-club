@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { RoomSnapshot } from "../game/multiplayer";
 
 interface ResultsProps {
@@ -9,9 +10,18 @@ interface ResultsProps {
 }
 
 export default function Results({ room, myId, isHost, onRestart, onHome }: ResultsProps) {
+  const [confirmingLeave, setConfirmingLeave] = useState(false);
   const ranked = [...room.players].sort((a, b) => b.score - a.score);
   const me = room.players.find((p) => p.id === myId);
   const myRank = ranked.findIndex((p) => p.id === myId) + 1;
+
+  function handleHomeClick() {
+    if (isHost) {
+      setConfirmingLeave(true);
+    } else {
+      onHome();
+    }
+  }
 
   return (
     <div className="app results">
@@ -42,9 +52,23 @@ export default function Results({ room, myId, isHost, onRestart, onHome }: Resul
         </button>
       )}
 
-      <button className="link-btn" onClick={onHome}>
-        לדף הבית
-      </button>
+      {confirmingLeave ? (
+        <div className="confirm-box">
+          <p className="confirm-text">לצאת יסגור את החדר לכולם. להמשיך?</p>
+          <div className="confirm-actions">
+            <button className="btn-primary btn-danger" onClick={onHome}>
+              כן, צא
+            </button>
+            <button className="link-btn" onClick={() => setConfirmingLeave(false)}>
+              ביטול
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button className="link-btn" onClick={handleHomeClick}>
+          לדף הבית
+        </button>
+      )}
     </div>
   );
 }

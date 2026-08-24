@@ -12,7 +12,7 @@ import Leaderboard from "./components/Leaderboard";
 
 const QUESTIONS = loadQuestions();
 
-type Screen = "home" | "solo" | "multi";
+type Screen = "home" | "solo";
 
 function readCodeFromHash(): string | undefined {
   const m = window.location.hash.match(/^#\/room\/([A-Za-z0-9]+)/);
@@ -35,23 +35,22 @@ export default function App() {
   }, []);
 
   const handlePlaySolo = useCallback(() => {
+    if (mp.room) return;
     quiz.restart();
     setScreen("solo");
-  }, [quiz]);
+  }, [mp.room, quiz]);
 
   const handleCreate = useCallback(async (name: string) => {
-    const ok = await mp.createRoom(name);
-    if (ok && mp.room) {
-      setHashCode(mp.room.code);
-      setScreen("multi");
+    const res = await mp.createRoom(name);
+    if (res.ok && res.code) {
+      setHashCode(res.code);
     }
   }, [mp]);
 
   const handleJoin = useCallback(async (code: string, name: string) => {
-    const ok = await mp.joinRoom(code, name);
-    if (ok && mp.room) {
-      setHashCode(mp.room.code);
-      setScreen("multi");
+    const res = await mp.joinRoom(code, name);
+    if (res.ok && res.code) {
+      setHashCode(res.code);
     }
   }, [mp]);
 
@@ -68,31 +67,7 @@ export default function App() {
     [mp],
   );
 
-  if (screen === "solo") {
-    if (quiz.finished) {
-      return (
-        <Results
-          score={quiz.score}
-          total={quiz.total}
-          onRestart={quiz.restart}
-          onHome={goHome}
-        />
-      );
-    }
-    return (
-      <QuizScreen
-        question={quiz.current!}
-        index={quiz.index}
-        total={quiz.total}
-        answered={quiz.answered}
-        wasCorrect={quiz.wasCorrect}
-        onSubmit={quiz.submitAnswer}
-        onNext={quiz.next}
-      />
-    );
-  }
-
-  if (screen === "multi" && room) {
+  if (room) {
     const myId = mp.myId;
     const myPlayer = room.players.find((p) => p.id === myId);
     const myAnswered = !!myPlayer?.answered;
@@ -116,6 +91,30 @@ export default function App() {
         isHost={mp.isHost}
         onRestart={mp.restart}
         onHome={handleLeave}
+      />
+    );
+  }
+
+  if (screen === "solo") {
+    if (quiz.finished) {
+      return (
+        <Results
+          score={quiz.score}
+          total={quiz.total}
+          onRestart={quiz.restart}
+          onHome={goHome}
+        />
+      );
+    }
+    return (
+      <QuizScreen
+        question={quiz.current!}
+        index={quiz.index}
+        total={quiz.total}
+        answered={quiz.answered}
+        wasCorrect={quiz.wasCorrect}
+        onSubmit={quiz.submitAnswer}
+        onNext={quiz.next}
       />
     );
   }

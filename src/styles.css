@@ -122,6 +122,40 @@ body {
   color: var(--text);
 }
 
+.confirm-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px 28px;
+  width: 100%;
+  max-width: 380px;
+  animation: rise 0.3s ease both;
+}
+
+.confirm-text {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.confirm-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.btn-danger {
+  background: var(--wrong);
+  color: #fff;
+}
+
+.btn-danger:hover {
+  box-shadow: 0 10px 30px rgba(229, 72, 77, 0.3);
+}
+
 .logo {
   font-size: 96px;
   font-weight: 900;
