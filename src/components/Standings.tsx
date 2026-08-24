@@ -29,11 +29,20 @@ export default function Standings({
   });
   const frameRef = useRef(0);
 
-  const newRanked = [...players].sort((a, b) => b.score - a.score);
-  const prevRanked = [...players].sort(
+  const rows = [...players].sort(
     (a, b) => (prevRanks[a.id] ?? 999) - (prevRanks[b.id] ?? 999),
   );
-  const shown = showingNew ? newRanked : prevRanked;
+  const prevPositions = new Map(rows.map((p, i) => [p.id, i]));
+  const newPositions = new Map(
+    [...players]
+      .sort(
+        (a, b) =>
+          b.score - a.score ||
+          (prevRanks[a.id] ?? 999) - (prevRanks[b.id] ?? 999),
+      )
+      .map((p, i) => [p.id, i]),
+  );
+  const positions = showingNew ? newPositions : prevPositions;
 
   useEffect(() => {
     const id = setTimeout(() => setShowingNew(true), PREV_HOLD_MS);
@@ -68,9 +77,10 @@ export default function Standings({
         </span>
       </div>
 
-      <div className="standings-rows" style={{ height: shown.length * ROW_STEP }}>
-        {shown.map((p, i) => {
-          const rank = i + 1;
+      <div className="standings-rows" style={{ height: rows.length * ROW_STEP }}>
+        {rows.map((p) => {
+          const pos = positions.get(p.id) ?? 0;
+          const rank = pos + 1;
           const prev = prevRanks[p.id];
           const moved = showingNew && prev != null ? prev - rank : 0;
           const gained = showingNew && correctIds.includes(p.id);
@@ -83,7 +93,7 @@ export default function Standings({
             <div
               key={p.id}
               className={rowClass}
-              style={{ transform: `translateY(${i * ROW_STEP}px)` }}
+              style={{ transform: `translateY(${pos * ROW_STEP}px)` }}
             >
               <span className="leader-rank">
                 {rank === 1 ? <Icon name="trophy" label="מקום ראשון" /> : rank}
