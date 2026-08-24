@@ -7,6 +7,7 @@ import Icon from "./Icon";
 
 const QUESTION_MS = 60000;
 const ANSWER_ACT_MS = 4500;
+const TABLE_MS = 5000;
 
 type Act = "answer" | "table";
 
@@ -49,7 +50,8 @@ export default function QuizScreen({
 
   const isReveal = room.phase === "reveal";
   const showTable = isReveal && act === "table";
-  const remainingMs = Math.max(0, room.deadline - (now + clockOffset));
+  const deadline = showTable ? room.revealDeadline : room.deadline;
+  const remainingMs = Math.max(0, deadline - (now + clockOffset));
   const secondsLeft = Math.ceil(remainingMs / 1000);
 
   const me = room.players.find((p) => p.id === myId);
@@ -107,6 +109,20 @@ export default function QuizScreen({
           prevScores={prevScores}
           correctIds={room.reveal?.correctPlayers ?? []}
         />
+      )}
+
+      {showTable && (
+        <div className="question-timer">
+          <div className="timer-bar">
+            <div
+              className="timer-fill"
+              style={{ width: `${Math.min(100, (remainingMs / TABLE_MS) * 100)}%` }}
+            />
+          </div>
+          <span className="timer-text" aria-label={`${secondsLeft} שניות`}>
+            <Icon name="wait" label="ממתין" /> {secondsLeft}
+          </span>
+        </div>
       )}
 
       {!isReveal && me?.answered && (

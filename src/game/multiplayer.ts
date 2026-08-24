@@ -18,6 +18,7 @@ export interface RoomSnapshot {
   total: number;
   phase: RoomPhase;
   deadline: number;
+  revealDeadline: number;
   serverNow: number;
   question?: Question;
   reveal?: {
