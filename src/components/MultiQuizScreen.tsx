@@ -102,7 +102,6 @@ export default function QuizScreen({
 
       {showTable && (
         <Standings
-          key={`standings-${room.index}`}
           players={room.players}
           myId={myId}
           prevRanks={prevRanks}

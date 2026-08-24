@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { RoomPlayer } from "../game/multiplayer";
 import Icon from "./Icon";
 
@@ -10,7 +10,9 @@ interface StandingsProps {
   correctIds: string[];
 }
 
+const PREV_HOLD_MS = 800;
 const TWEEN_MS = 900;
+const ROW_GAP = 8;
 
 export default function Standings({
   players,
@@ -19,14 +21,26 @@ export default function Standings({
   prevScores,
   correctIds,
 }: StandingsProps) {
+  const [showingNew, setShowingNew] = useState(false);
   const [displayScores, setDisplayScores] = useState<Record<string, number>>({
     ...prevScores,
   });
+  const [rowStep, setRowStep] = useState(60);
   const frameRef = useRef(0);
 
-  const ranked = [...players].sort((a, b) => b.score - a.score);
+  const newRanked = [...players].sort((a, b) => b.score - a.score);
+  const prevRanked = [...players].sort(
+    (a, b) => (prevRanks[a.id] ?? 999) - (prevRanks[b.id] ?? 999),
+  );
+  const shown = showingNew ? newRanked : prevRanked;
 
   useEffect(() => {
+    const id = setTimeout(() => setShowingNew(true), PREV_HOLD_MS);
+    return () => clearTimeout(id);
+  }, []);
+
+  useEffect(() => {
+    if (!showingNew) return;
     const from = { ...prevScores };
     const start = performance.now();
     const tick = (t: number) => {
@@ -42,7 +56,12 @@ export default function Standings({
     };
     frameRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frameRef.current);
-  }, [players, prevScores]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showingNew]);
+
+  const measureRef = useCallback((el: HTMLDivElement | null) => {
+    if (el) setRowStep(el.offsetHeight + ROW_GAP);
+  }, []);
 
   return (
     <div className="standings">
@@ -53,19 +72,24 @@ export default function Standings({
         </span>
       </div>
 
-      <div className="leaderboard">
-        {ranked.map((p, i) => {
+      <div className="standings-rows" style={{ height: shown.length * rowStep }}>
+        {shown.map((p, i) => {
           const rank = i + 1;
           const prev = prevRanks[p.id];
-          const moved = prev != null ? prev - rank : 0;
-          const gained = correctIds.includes(p.id);
+          const moved = showingNew && prev != null ? prev - rank : 0;
+          const gained = showingNew && correctIds.includes(p.id);
           let rowClass = "leader-row";
           if (p.id === myId) rowClass += " me";
           if (moved > 0) rowClass += " move-up";
           if (moved < 0) rowClass += " move-down";
           if (gained) rowClass += " got-point";
           return (
-            <div key={p.id} className={rowClass}>
+            <div
+              key={p.id}
+              ref={i === 0 ? measureRef : undefined}
+              className={rowClass}
+              style={{ transform: `translateY(${i * rowStep}px)` }}
+            >
               <span className="leader-rank">
                 {rank === 1 ? <Icon name="trophy" label="מקום ראשון" /> : rank}
               </span>

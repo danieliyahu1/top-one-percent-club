@@ -644,6 +644,27 @@ body {
   background: rgba(255, 255, 255, 0.06);
 }
 
+.standings-rows {
+  position: relative;
+  width: 100%;
+}
+
+.standings-rows .leader-row {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  opacity: 1;
+  animation: none;
+  transition: transform 0.7s ease;
+  will-change: transform;
+}
+
+.standings .leader-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Typed answer verdict */
 .typed-input.correct {
   border-color: var(--correct);
