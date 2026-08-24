@@ -80,7 +80,10 @@ export default function Standings({
               ) : (
                 <span className="move-same">=</span>
               )}
-              <span className="leader-name">{p.name}</span>
+              <span className="leader-name">
+                {p.name}
+                {p.id === myId && <Icon name="person" label="אתה" />}
+              </span>
               <span className="leader-score">
                 {displayScores[p.id] ?? p.score}
                 {gained && <span className="point-pop">+1</span>}
