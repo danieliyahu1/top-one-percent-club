@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
 import type { Question } from "../types";
 
+export const QUIZ_SIZE = 10;
+
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -10,9 +12,14 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
+function pickQuiz(questions: Question[]): Question[] {
+  return shuffle(questions).slice(0, QUIZ_SIZE);
+}
+
 export function useQuiz(questions: Question[]) {
+  const [quiz, setQuiz] = useState<Question[]>(() => pickQuiz(questions));
   const [order, setOrder] = useState<number[]>(() =>
-    shuffle(questions.map((_, i) => i)),
+    shuffle(quiz.map((_, i) => i)),
   );
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -20,11 +27,11 @@ export function useQuiz(questions: Question[]) {
   const [wasCorrect, setWasCorrect] = useState(false);
   const [finished, setFinished] = useState(false);
 
-  const total = questions.length;
+  const total = quiz.length;
 
   const current = useMemo(
-    () => (index < total ? questions[order[index]] : undefined),
-    [questions, order, index, total],
+    () => (index < total ? quiz[order[index]] : undefined),
+    [quiz, order, index, total],
   );
 
   const submitAnswer = useCallback(
@@ -47,7 +54,9 @@ export function useQuiz(questions: Question[]) {
   }, [index, total]);
 
   const restart = useCallback(() => {
-    setOrder(shuffle(questions.map((_, i) => i)));
+    const newQuiz = pickQuiz(questions);
+    setQuiz(newQuiz);
+    setOrder(shuffle(newQuiz.map((_, i) => i)));
     setIndex(0);
     setScore(0);
     setAnswered(false);
