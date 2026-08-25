@@ -58,15 +58,13 @@ export default function Lobby({ room, isHost, onStart, onLeave }: LobbyProps) {
 
       {confirmingLeave ? (
         <div className="confirm-box">
-          <p className="confirm-text">
-            <Icon name="warning" label="אזהרה" />
-          </p>
+          <p className="confirm-text">לצאת מהחדר יסיים את המשחק לכולם</p>
           <div className="confirm-actions">
-            <button className="btn-primary btn-danger" onClick={onLeave} aria-label="כן, צא">
-              <Icon name="cross" label="כן, צא" />
+            <button className="btn-primary btn-danger" onClick={onLeave} aria-label="לצאת">
+              <span>לצאת</span>
             </button>
-            <button className="link-btn" onClick={() => setConfirmingLeave(false)} aria-label="ביטול">
-              <Icon name="home" label="ביטול" />
+            <button className="link-btn" onClick={() => setConfirmingLeave(false)} aria-label="להישאר">
+              <span>להישאר</span>
             </button>
           </div>
         </div>

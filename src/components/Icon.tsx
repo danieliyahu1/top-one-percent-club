@@ -20,7 +20,7 @@ export type IconName =
   | "wait"
   | "trophy"
   | "results"
-  | "warning"
+
   | "person"
   | "code"
   | "up"
@@ -132,13 +132,7 @@ const PATHS: Record<IconName, JSX.Element> = {
       <path d="M5 4h11l-2 4 2 4H5" />
     </>
   ),
-  warning: (
-    <>
-      <path d="M12 3L2 20h20L12 3z" />
-      <line x1="12" y1="10" x2="12" y2="14" />
-      <line x1="12" y1="17" x2="12.01" y2="17" />
-    </>
-  ),
+
   person: (
     <>
       <circle cx="12" cy="8" r="4" />
