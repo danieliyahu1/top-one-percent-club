@@ -51,9 +51,7 @@ export default function Lobby({ room, isHost, onStart, onLeave }: LobbyProps) {
           <Icon name="gamepad" label="התחל משחק" />
         </button>
       ) : (
-        <p className="share-hint">
-          <Icon name="wait" label="ממתין שהמנחה יתחיל" />
-        </p>
+        <p className="share-hint">ממתין שהמנחה יתחיל</p>
       )}
 
       {confirmingLeave ? (

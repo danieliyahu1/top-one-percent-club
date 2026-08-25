@@ -84,7 +84,7 @@ export default function QuizScreen({
               />
             </div>
             <span className="timer-text" aria-label="השניה הבאה בעוד">
-              <Icon name="wait" label="ממתין" /> {secondsLeft}
+              <Icon name="clock" label="זמן" /> {secondsLeft}
             </span>
           </div>
           <button className="btn-primary" onClick={onNext} aria-label="השאלה הבאה">

@@ -84,7 +84,7 @@ export default function Landing({
           disabled={busy || !name.trim() || (joinMode && !code.trim())}
         >
           <Icon
-            name={busy ? "wait" : joinMode ? "join" : "create"}
+            name={busy ? "clock" : joinMode ? "join" : "create"}
             label={busy ? "טוען..." : joinMode ? "הצטרף" : "צור חדר"}
           />
           <span>{busy ? "טוען..." : joinMode ? "הצטרף" : "צור חדר"}</span>

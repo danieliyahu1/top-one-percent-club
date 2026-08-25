@@ -17,7 +17,6 @@ export type IconName =
   | "join"
   | "submit"
   | "share"
-  | "wait"
   | "trophy"
   | "results"
 
@@ -107,14 +106,6 @@ const PATHS: Record<IconName, JSX.Element> = {
     <>
       <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7" />
       <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7" />
-    </>
-  ),
-  wait: (
-    <>
-      <line x1="6" y1="3" x2="18" y2="3" />
-      <line x1="6" y1="21" x2="18" y2="21" />
-      <path d="M6 3v3c0 2 2 3 6 3s6-1 6-3V3" />
-      <path d="M6 21v-3c0-2 2-3 6-3s6 1 6 3v3" />
     </>
   ),
   trophy: (

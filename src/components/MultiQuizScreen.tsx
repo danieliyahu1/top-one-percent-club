@@ -119,7 +119,7 @@ export default function QuizScreen({
             />
           </div>
           <span className="timer-text" aria-label={`${secondsLeft} שניות`}>
-            <Icon name="wait" label="ממתין" /> {secondsLeft}
+            <Icon name="clock" label="זמן" /> {secondsLeft}
           </span>
         </div>
       )}
