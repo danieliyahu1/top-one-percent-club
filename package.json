@@ -7,7 +7,7 @@
     "dev": "concurrently -k -n server,client -c blue,green \"npm:dev:server\" \"npm:dev:client\"",
     "dev:client": "vite",
     "dev:server": "tsx watch server/index.ts",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && tsc -p server/tsconfig.json",
     "typecheck": "tsc -b && tsc -p server/tsconfig.json",
     "start": "tsx server/index.ts",
     "preview": "vite preview"
