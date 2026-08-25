@@ -123,6 +123,12 @@ export class RoomManager {
     return false;
   }
 
+  transferHost(code: string): void {
+    const room = this.rooms.get(code);
+    if (!room || room.players.length === 0) return;
+    room.hostId = room.players[0].id;
+  }
+
   start(code: string): Room | null {
     const room = this.rooms.get(code);
     if (!room || room.phase !== "lobby" || room.players.length === 0) return null;

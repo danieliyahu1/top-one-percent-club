@@ -65,13 +65,13 @@ function leaveRoom(socket: Socket) {
   const room = rooms.get(code);
   if (!room) return;
   socket.leave(code);
-  if (room.hostId === socket.id) {
-    rooms.remove(code);
-    io.to(code).emit("room:closed");
-    return;
-  }
+  const wasHost = room.hostId === socket.id;
   const removed = rooms.removePlayer(code, socket.id);
-  if (!removed) emitRoom(code);
+  if (removed) return;
+  if (wasHost) {
+    rooms.transferHost(code);
+  }
+  emitRoom(code);
 }
 
 io.on("connection", (socket) => {
