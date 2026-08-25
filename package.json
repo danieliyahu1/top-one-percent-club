@@ -9,6 +9,9 @@
     "dev:server": "tsx watch server/index.ts",
     "build": "tsc -b && vite build && tsc -p server/tsconfig.json",
     "typecheck": "tsc -b && tsc -p server/tsconfig.json",
+    "validate:questions": "node scripts/validate-questions.mjs",
+    "test": "node --test scripts/validate-questions.test.mjs",
+    "check": "npm run typecheck && npm run validate:questions && npm test",
     "start": "tsx server/index.ts",
     "preview": "vite preview"
   },
