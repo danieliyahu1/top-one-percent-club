@@ -1,0 +1,12 @@
+﻿{
+  "id": "q-80-1",
+  "percentage": 40,
+  "questionText": "אם נחשב יחד את כל שברי האבטיחים שבתמונה, כמות של כמה אבטיחים נקבל?",
+  "questionImage": "80.1.jpeg",
+  "answerMode": "typed",
+  "acceptedAnswers": [
+    "5",
+    "חמישה",
+    "חמש"
+  ]
+}

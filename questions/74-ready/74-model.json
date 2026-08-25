@@ -1,0 +1,24 @@
+﻿{
+  "id": "q-74-2",
+  "percentage": -1,
+  "questionText": "באיזו מהתמונות יש טעות?",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "ans-aleph",
+      "type": "image",
+      "image": "74.1.jpeg"
+    },
+    {
+      "id": "ans-bet",
+      "type": "image",
+      "image": "74.2.jpeg"
+    },
+    {
+      "id": "ans-gimel",
+      "type": "image",
+      "image": "74.3.jpeg"
+    }
+  ],
+  "correctAnswerId": "ans-aleph"
+}

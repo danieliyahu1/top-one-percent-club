@@ -1,0 +1,25 @@
+﻿{
+  "id": "q-78-1",
+  "percentage": 50,
+  "questionText": "רוני תמיד שמה לק אדום בצורה משונה. מה היא תחשוב על השאלה הזו?",
+  "questionImage": "78.1.jpeg",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "ans-aleph",
+      "type": "text",
+      "text": "קשה פצצות"
+    },
+    {
+      "id": "ans-bet",
+      "type": "text",
+      "text": "בינוני וזהו"
+    },
+    {
+      "id": "ans-gimel",
+      "type": "text",
+      "text": "קל מאוד"
+    }
+  ],
+  "correctAnswerId": "ans-aleph"
+}

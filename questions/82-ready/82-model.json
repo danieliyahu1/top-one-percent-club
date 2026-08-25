@@ -1,0 +1,19 @@
+﻿{
+  "id": "q-82-1",
+  "percentage": 90,
+  "questionText": "איזו תמונה לא הגיונית?",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "ans-aleph",
+      "type": "image",
+      "image": "82.1.jpeg"
+    },
+    {
+      "id": "ans-bet",
+      "type": "image",
+      "image": "82.2.jpeg"
+    }
+  ],
+  "correctAnswerId": "ans-aleph"
+}
