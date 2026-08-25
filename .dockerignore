@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-server
+.git
+.github
+.opencode
+opencode.json
+*.local
+*.md
+tsconfig.tsbuildinfo
+.gitignore
+Dockerfile
+.dockerignore
+deploy
