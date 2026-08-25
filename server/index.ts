@@ -16,6 +16,10 @@ const io = new Server(httpServer, {
 });
 const rooms = new RoomManager();
 
+app.get("/healthz", (_req, res) => {
+  res.status(200).end("ok");
+});
+
 app.use(
   "/questions",
   (req, res, next) => {
