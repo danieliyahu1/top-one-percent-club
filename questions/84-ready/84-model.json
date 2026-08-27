@@ -1,0 +1,25 @@
+﻿{
+  "id": "q-84-1",
+  "percentage": 80,
+  "questionText": "על איזה עדה רמזת התמונה?",
+  "questionImage": "84.1.jpeg",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "ans-aleph",
+      "type": "text",
+      "text": "בוקרים"
+    },
+    {
+      "id": "ans-bet",
+      "type": "text",
+      "text": "תימנים"
+    },
+    {
+      "id": "ans-gimel",
+      "type": "text",
+      "text": "פרסים"
+    }
+  ],
+  "correctAnswerId": "ans-bet"
+}

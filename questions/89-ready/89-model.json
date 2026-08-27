@@ -1,0 +1,24 @@
+﻿{
+  "id": "q-89-1",
+  "percentage": 60,
+  "questionText": "איזו מילה תשלים את הרצף הבא:\nאיפור, פורים, רימון, מונית, ניתוח, ?",
+  "answerMode": "choice",
+  "answers": [
+    {
+      "id": "ans-aleph",
+      "type": "text",
+      "text": "תועלת"
+    },
+    {
+      "id": "ans-bet",
+      "type": "text",
+      "text": "תושבת"
+    },
+    {
+      "id": "ans-gimel",
+      "type": "text",
+      "text": "תוחלת"
+    }
+  ],
+  "correctAnswerId": "ans-gimel"
+}
