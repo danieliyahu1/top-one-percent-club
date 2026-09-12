@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/danieliyahu1/top-one-percent-club:sha-b0a3adf22768d69f4849d14716ff7b3ab3f2ea2a
+          image: ghcr.io/danieliyahu1/top-one-percent-club:sha-a50d50ed249443cae9a5ccf8a27eb97ecd573e95
           ports:
             - containerPort: 3001
           env:
