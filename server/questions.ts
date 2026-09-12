@@ -72,11 +72,17 @@ function listModelFiles(dir: string, out: string[] = []): string[] {
   return out;
 }
 
+function isPlayable(raw: RawQuestion): boolean {
+  if (!raw?.questionText?.trim()) return false;
+  if (raw.answerMode === "typed") return (raw.acceptedAnswers ?? []).length > 0;
+  return (raw.answers ?? []).length > 0;
+}
+
 export function loadQuestions(): Question[] {
   const questions: Question[] = [];
   for (const file of listModelFiles(QUESTIONS_DIR)) {
     const raw: RawQuestion = JSON.parse(readFileSync(file, "utf8").replace(/^\uFEFF/, ""));
-    if (!raw) continue;
+    if (!raw || !isPlayable(raw)) continue;
     const rel = file.slice(QUESTIONS_DIR.length + 1).replace(/\\/g, "/");
     questions.push(coerceQuestion(raw, dirname(rel)));
   }

@@ -11,12 +11,12 @@ type RawQuestion = {
   acceptedAnswers?: unknown[];
 };
 
-const jsonModules = import.meta.glob("/questions/**/*-model.json", {
+const jsonModules = import.meta.glob("/questions/*-ready/**/*-model.json", {
   eager: true,
   import: "default",
 }) as Record<string, RawQuestion>;
 
-const imageModules = import.meta.glob("/questions/**/*.{jpg,jpeg,png}", {
+const imageModules = import.meta.glob("/questions/*-ready/**/*.{jpg,jpeg,png}", {
   eager: true,
   query: "?url",
   import: "default",
@@ -62,10 +62,17 @@ function coerceQuestion(raw: RawQuestion, folder: string): Question {
   };
 }
 
+function isPlayable(raw: RawQuestion): boolean {
+  if (!raw?.questionText?.trim()) return false;
+  if (raw.answerMode === "typed") return (raw.acceptedAnswers ?? []).length > 0;
+  return (raw.answers ?? []).length > 0;
+}
+
 export function loadQuestions(): Question[] {
   const questions: Question[] = [];
   for (const [path, raw] of Object.entries(jsonModules)) {
     if (!raw) continue;
+    if (!isPlayable(raw)) continue;
     questions.push(coerceQuestion(raw, dirname(path)));
   }
   return questions;
