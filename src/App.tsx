@@ -8,6 +8,7 @@ import Results from "./components/Results";
 import Lobby from "./components/Lobby";
 import MultiQuizScreen from "./components/MultiQuizScreen";
 import Leaderboard from "./components/Leaderboard";
+import Toasts from "./components/Toasts";
 
 const QUESTIONS = loadQuestions();
 
@@ -66,15 +67,17 @@ export default function App() {
     [mp],
   );
 
+  let content: JSX.Element;
+
   if (room) {
     const myId = mp.myId;
 
     if (room.phase === "lobby") {
-      return <Lobby room={room} isHost={mp.isHost} onStart={mp.start} onLeave={handleLeave} />;
-    }
-
-    if (room.phase === "question" || room.phase === "reveal") {
-      return (
+      content = (
+        <Lobby room={room} isHost={mp.isHost} onStart={mp.start} onLeave={handleLeave} />
+      );
+    } else if (room.phase === "question" || room.phase === "reveal") {
+      content = (
         <MultiQuizScreen
           room={room}
           myId={myId}
@@ -84,24 +87,23 @@ export default function App() {
           prevScores={mp.prevScores}
           onSubmit={handleAnswer}
           onNext={mp.next}
+          onExit={handleLeave}
+        />
+      );
+    } else {
+      content = (
+        <Leaderboard
+          room={room}
+          myId={myId}
+          isHost={mp.isHost}
+          onRestart={mp.restart}
+          onHome={handleLeave}
         />
       );
     }
-
-    return (
-      <Leaderboard
-        room={room}
-        myId={myId}
-        isHost={mp.isHost}
-        onRestart={mp.restart}
-        onHome={handleLeave}
-      />
-    );
-  }
-
-  if (screen === "solo") {
+  } else if (screen === "solo") {
     if (quiz.finished) {
-      return (
+      content = (
         <Results
           score={quiz.score}
           total={quiz.total}
@@ -109,28 +111,37 @@ export default function App() {
           onHome={goHome}
         />
       );
+    } else {
+      content = (
+        <QuizScreen
+          question={quiz.current!}
+          index={quiz.index}
+          total={quiz.total}
+          answered={quiz.answered}
+          wasCorrect={quiz.wasCorrect}
+          onSubmit={quiz.submitAnswer}
+          onNext={quiz.next}
+          onHome={goHome}
+        />
+      );
     }
-    return (
-      <QuizScreen
-        question={quiz.current!}
-        index={quiz.index}
-        total={quiz.total}
-        answered={quiz.answered}
-        wasCorrect={quiz.wasCorrect}
-        onSubmit={quiz.submitAnswer}
-        onNext={quiz.next}
+  } else {
+    content = (
+      <Landing
+        defaultCode={defaultCode}
+        busy={mp.busy}
+        error={mp.error}
+        onPlaySolo={handlePlaySolo}
+        onCreate={handleCreate}
+        onJoin={handleJoin}
       />
     );
   }
 
   return (
-    <Landing
-      defaultCode={defaultCode}
-      busy={mp.busy}
-      error={mp.error}
-      onPlaySolo={handlePlaySolo}
-      onCreate={handleCreate}
-      onJoin={handleJoin}
-    />
+    <>
+      <Toasts toasts={mp.toasts} />
+      {content}
+    </>
   );
 }

@@ -66,11 +66,16 @@ function leaveRoom(socket: Socket) {
   if (!room) return;
   socket.leave(code);
   const wasHost = room.hostId === socket.id;
+  const leaver = room.players.find((p) => p.id === socket.id);
   const removed = rooms.removePlayer(code, socket.id);
   if (removed) return;
   if (wasHost) {
     rooms.transferHost(code);
   }
+  io.to(code).emit("player:left", {
+    name: leaver?.name ?? "שחקן",
+    phase: room.phase,
+  });
   emitRoom(code);
 }
 

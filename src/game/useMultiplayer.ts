@@ -35,6 +35,7 @@ export function useMultiplayer() {
   const capturedIndexRef = useRef<number | null>(null);
   const [prevRanks, setPrevRanks] = useState<Record<string, number>>({});
   const [prevScores, setPrevScores] = useState<Record<string, number>>({});
+  const [toasts, setToasts] = useState<{ id: number; text: string }[]>([]);
 
   useEffect(() => {
     const refreshId = () => setMyId(socket.id ?? "");
@@ -62,12 +63,27 @@ export function useMultiplayer() {
       setRoom(null);
       setError("המנחה סגר את החדר");
     });
+    socket.on(
+      "player:left",
+      (payload: { name: string; phase: string }) => {
+        const text =
+          payload.phase === "lobby"
+            ? `${payload.name} עזב את החדר`
+            : `${payload.name} פרש מהמשחק`;
+        const id = Date.now() + Math.random();
+        setToasts((t) => [...t, { id, text }]);
+        setTimeout(() => {
+          setToasts((t) => t.filter((x) => x.id !== id));
+        }, 4000);
+      },
+    );
     socket.on("connect_error", () => setError("חיבור נכשל"));
     if (socket.connected) refreshId();
     return () => {
       socket.off("connect", refreshId);
       socket.off("state");
       socket.off("room:closed");
+      socket.off("player:left");
       socket.off("connect_error");
     };
   }, []);
@@ -158,6 +174,7 @@ export function useMultiplayer() {
     isHost,
     prevRanks,
     prevScores,
+    toasts,
     createRoom,
     joinRoom,
     start,

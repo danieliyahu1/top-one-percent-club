@@ -20,6 +20,7 @@ interface QuizScreenProps {
   prevScores: Record<string, number>;
   onSubmit: (answerId: string | null, text?: string) => void;
   onNext: () => void;
+  onExit: () => void;
 }
 
 export default function QuizScreen({
@@ -31,6 +32,7 @@ export default function QuizScreen({
   prevScores,
   onSubmit,
   onNext,
+  onExit,
 }: QuizScreenProps) {
   const question = room.question!;
   const [now, setNow] = useState(Date.now());
@@ -62,9 +64,14 @@ export default function QuizScreen({
   return (
     <div className="app quiz">
       <div className="progress">
-        <span className="progress-text" aria-label={`שאלה ${room.index + 1} מתוך ${room.total}`}>
-          {room.index + 1} / {room.total}
-        </span>
+        <div className="progress-head">
+          <span className="progress-text" aria-label={`שאלה ${room.index + 1} מתוך ${room.total}`}>
+            {room.index + 1} / {room.total}
+          </span>
+          <button className="link-btn" onClick={onExit} aria-label="עזוב את המשחק">
+            <Icon name="leave" label="עזוב את המשחק" />
+          </button>
+        </div>
         <div className="progress-bar">
           <div
             className="progress-fill"

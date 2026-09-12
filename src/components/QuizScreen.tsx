@@ -14,6 +14,7 @@ interface QuizScreenProps {
   wasCorrect: boolean;
   onSubmit: (isCorrect: boolean) => void;
   onNext: () => void;
+  onHome: () => void;
 }
 
 export default function QuizScreen({
@@ -24,6 +25,7 @@ export default function QuizScreen({
   wasCorrect,
   onSubmit,
   onNext,
+  onHome,
 }: QuizScreenProps) {
   const [secondsLeft, setSecondsLeft] = useState(ANSWER_DELAY_SECONDS);
   const advancingRef = useRef(false);
@@ -48,9 +50,14 @@ export default function QuizScreen({
   return (
     <div className="app quiz">
       <div className="progress">
-        <span className="progress-text" aria-label={`שאלה ${index + 1} מתוך ${total}`}>
-          {index + 1} / {total}
-        </span>
+        <div className="progress-head">
+          <span className="progress-text" aria-label={`שאלה ${index + 1} מתוך ${total}`}>
+            {index + 1} / {total}
+          </span>
+          <button className="link-btn" onClick={onHome} aria-label="לדף הבית">
+            <Icon name="home" label="לדף הבית" />
+          </button>
+        </div>
         <div className="progress-bar">
           <div
             className="progress-fill"
